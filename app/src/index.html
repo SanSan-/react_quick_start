@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Try React</title>
+    <% for (let path of htmlWebpackPlugin.files.css) { %>
+    <link rel="stylesheet" type="text/css" href="<%=path %>"/>
+    <% } %>
+</head>
+
+<body>
+<div id="app">Загрузка приложения...</div>
+<% for (let path of htmlWebpackPlugin.files.js) { %>
+<script src="<%=path %>" type="text/javascript"></script>
+<% } %>
+</body>
+</html>
