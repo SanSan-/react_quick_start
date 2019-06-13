@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Button } from 'antd';
 
 class DynamicComponent extends React.Component {
   constructor (props) {
@@ -10,6 +11,7 @@ class DynamicComponent extends React.Component {
   render () {
     return <div id='simple_layout'>
       DynamicComponent
+      <Button>Search</Button>
     </div>;
   }
 }

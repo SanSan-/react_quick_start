@@ -40,6 +40,22 @@ module.exports = () => merge([
           ]
         },
         {
+          test: /\.less$/,
+          use: [
+            loaders.getCacheLoader(path.resolve(settings.cacheDir, 'css')),
+            loaders.getThreadLoader('css'),
+            'style-loader',
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'less-loader',
+              options: {
+                javascriptEnabled: true
+              }
+            }
+          ]
+        },
+        {
           test: /\.(png|gif|jpe?g)$/,
           use: ['file-loader?publicPath=../&name=img/[hash].[ext]']
         },
@@ -79,7 +95,6 @@ module.exports = () => merge([
           vendors: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
-            filename: './js/[name].bundle' + settings.resourcePrefix + '.js',
             chunks: 'all',
             enforce: true
           }
