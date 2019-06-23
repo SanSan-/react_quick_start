@@ -53,7 +53,7 @@ const devConfig = () => merge([
       open: false,
       port: 9090,
       proxy: {
-        '/httpbridge-server': {
+        '/server': {
           target: 'http://localhost:8000',
           secure: false
         }
