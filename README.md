@@ -510,7 +510,7 @@ package.json
   "eslintConfig": ".eslintrc.json"
 ```
 
-### Install test
+### Testing
 
 package.json
 ```json
@@ -635,7 +635,7 @@ module.exports = {
 * Idea configuration 
 <img src="https://api.monosnap.com/file/download?id=swpRsy3RpL0ItSaqcU0oZQdB97qbtr">
 
-### Install clear
+### Cleaning
 
 package.json
 ```json
