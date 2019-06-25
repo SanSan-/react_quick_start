@@ -50,14 +50,14 @@ package.json
 
 * Optimization: increase speed of build
 
-settings.js
+webpack/settings.js
 ```js
 const cacheDir = path.resolve(__dirname, '..', 'node_modules', '.cache');
 
 const threadLoader = { workerParallelJobs: 50, poolRespawn: false };
 ```
 
-loaders.js
+webpack/loaders.js
 ```js
 const settings = require('./settings');
 
@@ -78,7 +78,7 @@ const getThreadLoader = (name) => ({
 });
 ```
 
-base.config.js
+webpack/base.config.js
 ```js
     module: {
       rules: [
@@ -96,7 +96,7 @@ base.config.js
 
 * Optimization: split chunks on vendor (node_modules) and application-only
 
-base.config.js
+webpack/base.config.js
 ```js
     optimization: {
       splitChunks: {
@@ -115,7 +115,7 @@ base.config.js
 
 * Optimization: auto paste scripts into html and load favicon
 
-settings.js
+webpack/settings.js
 ```js
 const htmlPlugin = {
   inject: false,
@@ -126,7 +126,7 @@ const htmlPlugin = {
 };
 ```
 
-prod.config.js / dev.config.js
+webpack/prod.config.js or webpack/dev.config.js
 ```js
     plugins: [
       ...,
@@ -146,7 +146,7 @@ index.html
 
 * Optimization: minimization and uglyfying
 
-prod.config.js
+webpack/prod.config.js
 ```js
     plugins: [
       ...,
@@ -168,7 +168,7 @@ prod.config.js
 
 * Optimization: version control
 
-prod.config.js
+webpack/prod.config.js
 ```js
 const gitRevisionPlugin = new GitRevisionPlugin({ branch: true, lightweightTags: true });
 const versionComment = '/* Version ' + gitRevisionPlugin.version() + '; branch: ' +
@@ -199,7 +199,7 @@ package.json
   }
 ```
 
-base.config.js
+webpack/base.config.js
 ```js
     module: {
       rules: [
@@ -235,7 +235,7 @@ base.config.js
     }
 ```
 
-dev.config.js
+webpack/dev.config.js
 ```js
     plugins: [
       ...,
@@ -259,7 +259,7 @@ dev.config.js
     },
 ```
 
-prod.config.js
+webpack/prod.config.js
 ```js
     plugins: [
       ...,
@@ -379,6 +379,43 @@ index.js
   }
 ```
 
+* Parse query from uri
+
+package.json
+```json
+  "devDependencies": {
+    ...,
+    "query-string": "^5.1.1",
+    ...
+  }
+```
+
+~utils/ParseUtils.js
+```js
+import queryString from 'query-string';
+
+export const parseQuery = (location) =>
+  location && location !== null && typeof location === 'object' && location.search ?
+    queryString.parse(location.search) : {};
+```
+
+> use
+```js
+import { parseQuery } from '~utils/ParseUtils';
+
+export default connect((state) => ({
+  query: parseQuery(state.router.location),
+  ...
+}))(Component);
+```
+
+
+
+** We need version 5 because newest versions crash vendor bundle in IE
+
+** If you sure that you code could not run under IE or other older browser use `query-string@6` or newer
+ 
+
 ### Install Babel
 
 package.json
@@ -411,7 +448,7 @@ package.json
 }
 ```
 
-base.config.js
+webpack/base.config.js
 ```js
         module: {
           rules: [

@@ -1,5 +1,5 @@
 const getInfo = {
-    info: 'data'
+  info: 'data'
 };
 
-module.exports = {getInfo};
+module.exports = { getInfo };
