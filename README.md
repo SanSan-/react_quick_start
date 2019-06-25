@@ -510,6 +510,54 @@ package.json
   "eslintConfig": ".eslintrc.json"
 ```
 
+.eslintrc.json
+```json
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "globalReturn": false,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "commonjs": true,
+    "browser": true,
+    "jquery": false,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "global": true,
+    ...
+  },
+  "plugins": [
+    "babel",
+    "react"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  ...
+```
+
+webpack/base.config.js
+```js
+    module: {
+      rules: [
+        ...,
++       {
++         test: /\.jsx?$/,
++         use: ['eslint-loader'],
++         exclude: /(node_modules)/
++       }
+      ]
+    }
+```
+
 ### Testing
 
 package.json
@@ -568,7 +616,6 @@ package.json
 +    "jest": true
    },
 ```
-
 
 jest.config.js
 ```js
