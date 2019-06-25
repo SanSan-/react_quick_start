@@ -7,3 +7,4 @@
 /target/
 
 package-lock.json
+*.report.html
