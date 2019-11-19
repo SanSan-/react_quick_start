@@ -1,9 +1,10 @@
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose, Store } from 'redux';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunkMiddleware from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from '../reducers';
+import { GeneralStateType } from '~types/store';
 
 export const history = createHashHistory();
 
@@ -23,6 +24,4 @@ const reducers = combineReducers({
   router: connectRouter(history)
 });
 
-export default function configureStore (initialState) {
-  return createStore(reducers, initialState, enchacer);
-}
+export default (initialState: GeneralStateType): Store => createStore(reducers, initialState, enchacer);

@@ -1,13 +1,7 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 7,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "globalReturn": false,
-      "experimentalObjectRestSpread": true
-    }
+    "project": "./tsconfig.json"
   },
   "env": {
     "commonjs": true,
@@ -26,13 +20,21 @@
     "SERVER_MODULE_NAME": false
   },
   "plugins": [
-    "babel",
-    "react"
+    "@typescript-eslint",
+    "react-hooks"
   ],
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "arrow-body-style": [
       2,
@@ -199,9 +201,11 @@
       "as-needed"
     ],
     "quotes": [
-      2,
+      "error",
       "single",
-      "avoid-escape"
+      {
+        "allowTemplateLiterals": true
+      }
     ],
     "radix": [
       2,
@@ -272,6 +276,18 @@
     "yoda": [
       2,
       "never"
+    ],
+    "@typescript-eslint/unbound-method": [
+      "off"
+    ],
+    "@typescript-eslint/no-this-alias": [
+      "off"
+    ],
+    "react-hooks/rules-of-hooks": [
+      "error"
+    ],
+    "react-hooks/exhaustive-deps": [
+      "off"
     ]
   }
 }

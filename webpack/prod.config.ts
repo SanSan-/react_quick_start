@@ -1,4 +1,5 @@
-/* eslint-disable no-process-env, no-undef */
+/* eslint-disable no-process-env, no-undef, @typescript-eslint/no-var-requires,
+@typescript-eslint/explicit-function-return-type */
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 
