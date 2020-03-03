@@ -27,8 +27,8 @@ This is quick start bundle for quick start development without noisy initializat
 package.json
 ```json
   "scripts": {
-    "webpack:start": "webpack-dev-server --progress --colors --config ./webpack/dev.config.js",
-    "webpack:build": "webpack --config ./webpack/prod.config.js",
+    "webpack:start": "webpack-dev-server --progress --colors --config ./webpack/dev.config.ts",
+    "webpack:build": "webpack --config ./webpack/prod.config.ts",
     "webpack:watch": "npm run webpack:build -- --progress --colors --watch",
   },
   "devDependencies": {
@@ -126,7 +126,7 @@ const htmlPlugin = {
 };
 ```
 
-webpack/prod.config.ts or webpack/dev.config.js
+webpack/prod.config.ts or webpack/dev.config.ts
 ```js
     plugins: [
       ...,
@@ -235,7 +235,7 @@ webpack/base.config.ts
     }
 ```
 
-webpack/dev.config.js
+webpack/dev.config.ts
 ```js
     plugins: [
       ...,
@@ -389,7 +389,7 @@ package.json
   }
 ```
 
-~utils/ParseUtils.js
+~utils/ParseUtils.ts
 ```js
 import queryString from 'query-string';
 
@@ -553,7 +553,7 @@ webpack/base.config.ts
       rules: [
         ...,
 +       {
-+         test: /\.jsx?$/,
++         test: /\.tsx?$/,
 +         use: ['eslint-loader'],
 +         exclude: /(node_modules)/
 +       }
@@ -656,7 +656,8 @@ jest.config.js
 }
 ```
 
-test/enzyme.config.js
+test/enzyme.config.ts
+```js
 enzyme.config.tsaf/polyfill');
 require('jest-localstorage-mock');
 
