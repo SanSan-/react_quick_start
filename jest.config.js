@@ -79,10 +79,16 @@ module.exports = {
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    '^~src(.*)$': '<rootDir>/app/src$1',
     '^~app(.*)$': '<rootDir>/app$1',
+    '^~src(.*)$': '<rootDir>/app/src$1',
+    '^~actions(.*)$': '<rootDir>/app/src/actions$1',
     '^~components(.*)$': '<rootDir>/app/src/components$1',
-    '^~stores(.*)$': '<rootDir>/app/src/stores$1',
+    '^~const(.*)$': '<rootDir>/app/src/constants$1',
+    '^~dictionaries(.*)$': '<rootDir>/app/src/dictionaries$1',
+    '^~forms(.*)$': '<rootDir>/app/src/forms$1',
+    '^~reducers(.*)$': '<rootDir>/app/src/reducers$1',
+    '^~types(.*)$': '<rootDir>/app/src/types$1',
+    '^~utils(.*)$': '<rootDir>/app/src/utils$1',
     '^~mock(.*)$': '<rootDir>/mock-server/app/routes/mock$1',
     '^~test(.*)$': '<rootDir>/test$1',
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy'
@@ -134,7 +140,7 @@ module.exports = {
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   setupFilesAfterEnv: [
-    '<rootDir>/test/enzyme.config.js'
+    '<rootDir>/test/enzyme.config.ts'
   ],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
@@ -153,7 +159,8 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    '**/test/**/*Test.js'
+    '**/test/**/*Test.ts',
+    '**/test/**/*Test.tsx'
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -165,7 +172,7 @@ module.exports = {
   // testRegex: [],
 
   // This option allows the use of a custom results processor
-  // testResultsProcessor: null,
+  testResultsProcessor: 'jest-sonar-reporter',
 
   // This option allows use of a custom test runner
   // testRunner: "jasmine2",
@@ -178,8 +185,8 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/test/__mocks/fileTransformer.js',
-    '^.+\\.(js|jsx)$': 'babel-jest'
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/test/__transformers/fileTransformer.js',
+    '^.+\\.tsx?$': 'babel-jest'
   }
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

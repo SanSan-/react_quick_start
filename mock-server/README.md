@@ -4,7 +4,7 @@
 
 * install all dependencies. run `npm i`
 
-* edit `webpack/dev.config.js`: change `devServer`->`proxy`->`target` to `http://localhost:8000`
+* edit `webpack/dev.config.ts`: change `devServer`->`proxy`->`target` to `http://localhost:8000`
 
 * run `start`
 

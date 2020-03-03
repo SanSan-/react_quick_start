@@ -4,8 +4,8 @@ import { spy } from 'sinon';
 
 import App from '~components/App';
 
-import { mockOptions } from '../__mocks/state';
-import { mount2dom } from '../__mocks/utils';
+import { mockOptions } from '~test/__mocks/state';
+import { mount2dom } from '~test/__mocks/utils';
 
 describe('Render component pages test', () => {
 

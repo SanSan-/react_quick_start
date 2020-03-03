@@ -1,4 +1,5 @@
-/* eslint-disable no-process-env, no-undef */
+/* eslint-disable no-process-env, no-undef, @typescript-eslint/no-var-requires,
+@typescript-eslint/explicit-function-return-type */
 const path = require('path');
 const merge = require('webpack-merge');
 
@@ -12,7 +13,7 @@ module.exports = () => merge([
   {
     context: settings.rootDir,
     entry: {
-      app: path.resolve(settings.rootDir, 'app', 'src', 'index.js')
+      app: path.resolve(settings.rootDir, 'app', 'src', 'index.tsx')
     },
     output: {
       publicPath: '',
@@ -64,7 +65,18 @@ module.exports = () => merge([
           use: ['file-loader?publicPath=../&name=fonts/[hash].[ext]?' + Date.now()]
         },
         {
-          test: /\.(js|jsx)$/,
+          test: /\.jsx?$/,
+          enforce: 'pre',
+          use: ['source-map-loader']
+        },
+        {
+          test: /\.tsx?$/,
+          enforce: 'pre',
+          use: ['eslint-loader'],
+          exclude: /(node_modules)/
+        },
+        {
+          test: /\.tsx?$/,
           exclude: /node_modules/,
           use: [
             loaders.getCacheLoader(path.resolve(settings.cacheDir, 'js')),
@@ -76,18 +88,14 @@ module.exports = () => merge([
               }
             }
           ]
-        },
-        {
-          test: /\.jsx?$/,
-          use: ['eslint-loader'],
-          exclude: /(node_modules)/
         }
       ]
     },
     externals: {},
     target: 'web',
     resolve: {
-      alias: settings.aliases
+      alias: settings.aliases,
+      extensions: ['.ts', '.tsx', '.js']
     },
     optimization: {
       splitChunks: {

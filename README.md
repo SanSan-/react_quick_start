@@ -1,4 +1,4 @@
-# [webpack 4, react-16, redux 4, react-router 5, babel 7, jest 24, enzyme 3, antd 3] Quick starter (without TypeScript (maybe temporary))
+# [typescript 3, webpack 4, react-16, redux 4, react-router 5, babel 7, jest 25, enzyme 3, antd 3] Quick starter
 
 ### Introduction
 
@@ -7,18 +7,18 @@ This is quick start bundle for quick start development without noisy initializat
 ### Bundle include:
 * main
 - bundler:: webpack 4
-- view:: react 16.8
+- view:: react 16.12
 - routing:: react-router 5
 - state storing:: redux 4, redux-thunk 2.3
-- history routing:: history 4.9, connected-react-router 6.4 
-- type checking:: prop-types 15
-- transpalation:: babel 7
+- history routing:: history 4.10, connected-react-router 6.6 
+- type checking:: typescript 3.8
+- js-compiler:: babel 7
 * test
-- test manager:: jest 24.8
+- test manager:: jest 25.1
 - test environments:: enzyme 3, sinon 7
-- static checking:: eslint 5.16
+- static lint checking:: eslint 6.8
 * decoration
-- components:: antd 3.19
+- components:: antd 3.26
 - date:: moment 2.24
 - style:: less 3.9, sass
 
@@ -33,31 +33,31 @@ package.json
   },
   "devDependencies": {
     ...
-    "cache-loader": "^2.0.1",
-    "copy-webpack-plugin": "^5.0.3",
-    "git-revision-webpack-plugin": "^3.0.3",
+    "acorn": "7.1.1",
+    "cache-loader": "4.1.0",
+    "git-revision-webpack-plugin": "3.0.3",
     "html-webpack-plugin": "3.2.0",
-    "terser-webpack-plugin": "^1.3.0",
-    "thread-loader": "^2.1.2",
-    "webpack": "^4.32.2",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.4.1",
-    "webpack-merge": "^4.1.5",
-    "wrapper-webpack-plugin": "^2.1.0"
+    "terser-webpack-plugin": "2.3.5",
+    "thread-loader": "2.1.3",
+    "webpack": "4.42.0",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.10.3",
+    "webpack-merge": "4.2.2",
+    "wrapper-webpack-plugin": "2.1.0"
     ...
   }
 ```
 
 * Optimization: increase speed of build
 
-webpack/settings.js
+webpack/settings.ts
 ```js
 const cacheDir = path.resolve(__dirname, '..', 'node_modules', '.cache');
 
 const threadLoader = { workerParallelJobs: 50, poolRespawn: false };
 ```
 
-webpack/loaders.js
+webpack/loaders.ts
 ```js
 const settings = require('./settings');
 
@@ -78,7 +78,7 @@ const getThreadLoader = (name) => ({
 });
 ```
 
-webpack/base.config.js
+webpack/base.config.ts
 ```js
     module: {
       rules: [
@@ -96,7 +96,7 @@ webpack/base.config.js
 
 * Optimization: split chunks on vendor (node_modules) and application-only
 
-webpack/base.config.js
+webpack/base.config.ts
 ```js
     optimization: {
       splitChunks: {
@@ -115,7 +115,7 @@ webpack/base.config.js
 
 * Optimization: auto paste scripts into html and load favicon
 
-webpack/settings.js
+webpack/settings.ts
 ```js
 const htmlPlugin = {
   inject: false,
@@ -126,11 +126,11 @@ const htmlPlugin = {
 };
 ```
 
-webpack/prod.config.js or webpack/dev.config.js
+webpack/prod.config.ts or webpack/dev.config.js
 ```js
     plugins: [
       ...,
-      new HtmlWebpackPlugin(settings.htmlPlugin)
+      new Htmldev.config.ts(settings.htmlPlugin)
     ] 
 ```
 
@@ -146,7 +146,7 @@ index.html
 
 * Optimization: minimization and uglyfying
 
-webpack/prod.config.js
+webpack/prod.config.ts
 ```js
     plugins: [
       ...,
@@ -168,7 +168,7 @@ webpack/prod.config.js
 
 * Optimization: version control
 
-webpack/prod.config.js
+webpack/prod.config.ts
 ```js
 const gitRevisionPlugin = new GitRevisionPlugin({ branch: true, lightweightTags: true });
 const versionComment = '/* Version ' + gitRevisionPlugin.version() + '; branch: ' +
@@ -189,17 +189,17 @@ package.json
 ```json
   "devDependencies": {
     ...
-    "css-loader": "^2.1.1",
+    "css-loader": "3.4.2",
     "mini-css-extract-plugin": "0.6.0",
-    "node-sass": "^4.11.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
+    "node-sass": "4.13.1",
+    "optimize-css-assets-webpack-plugin": "5.0.3",
+    "sass-loader": "8.0.2",
+    "style-loader": "1.1.3",
     ...
   }
 ```
 
-webpack/base.config.js
+webpack/base.config.ts
 ```js
     module: {
       rules: [
@@ -239,7 +239,7 @@ webpack/dev.config.js
 ```js
     plugins: [
       ...,
-      new MiniCssExtractPlugin({
+      new Minidev.config.tsgin({
         filename: './css/[name].[contenthash]' + settings.resourcePrefix + '.css',
         chunkFilename: './css/[id]' + settings.resourcePrefix + '.css',
         allChunks: true
@@ -259,7 +259,7 @@ webpack/dev.config.js
     },
 ```
 
-webpack/prod.config.js
+webpack/prod.config.ts
 ```js
     plugins: [
       ...,
@@ -292,9 +292,9 @@ package.json
 ```json
   "dependencies": {
     ...
-    "prop-types": "^15.7.2",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5",
+    "prop-types": "15.7.2",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
     "react-tooltip": "^3.10.0",
     ...
   }
@@ -306,15 +306,14 @@ package.json
 ```json
   "dependencies": {
     ...
-    "react-redux": "^6.0.1",
-    "redux": "^4.0.1",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
+    "react-redux": "7.2.0",
+    "redux": "4.0.5",
+    "redux-thunk": "2.3.0"
     ...
   },
   "devDependencies": {
     ...
-    "redux-devtools-extension": "^2.13.8",
+    "redux-devtools-extension": "2.13.8",
     ...
   }
 ```
@@ -325,21 +324,21 @@ package.json
 ```json
   "dependencies": {
     ...
-    "connected-react-router": "^6.4.0",
-    "react-router": "^5.0.0",
-    "react-router-dom": "^5.0.0",
+    "connected-react-router": "6.6.1",
+    "react-router": "5.1.2",
+    "react-router-dom": "5.1.2",
     ...
   },
   "devDependencies": {
     ...
-    "history": "^4.9.0",
+    "history": "4.10.1",
     ...
   }
 ```
 
 * Routing with store history
 
-stores/configureStore.js
+stores/configureStore.ts
 ```js
 + import { connectRouter, routerMiddleware } from 'connected-react-router';
   ... 
@@ -359,7 +358,7 @@ stores/configureStore.js
   });
 ```
 
-index.js
+index.ts
 ```js
 + import { ConnectedRouter } from 'connected-react-router';
 
@@ -385,7 +384,7 @@ package.json
 ```json
   "devDependencies": {
     ...,
-    "query-string": "^5.1.1",
+    "query-string": "5.1.1",
     ...
   }
 ```
@@ -409,8 +408,6 @@ export default connect((state) => ({
 }))(Component);
 ```
 
-
-
 ** We need version 5 because newest versions crash vendor bundle in IE
 
 ** If you sure that you code could not run under IE or other older browser use `query-string@6` or newer
@@ -421,17 +418,21 @@ export default connect((state) => ({
 package.json
 ```json
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.4.2",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.4.0",
-    "acorn": "^6.1.1",
-    "acorn-dynamic-import": "^4.0.0",
-    "babel-loader": "^8.0.5",
     ...
-  }
+    "@babel/core": "7.8.6",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
+    "@babel/plugin-syntax-dynamic-import": "7.8.3",
+    "@babel/preset-env": "7.8.6",
+    "@babel/preset-react": "7.8.3",
+    "@babel/register": "7.8.6",
+    "acorn-dynamic-import": "4.0.0",
+    "babel-loader": "8.0.6",
+    ...
+  },
+  "browserslist": [
+    "last 1 version",
+    "ie 11"
+  ],
 ```
 
 .babelrc
@@ -448,7 +449,7 @@ package.json
 }
 ```
 
-webpack/base.config.js
+webpack/base.config.ts
 ```js
         module: {
           rules: [
@@ -502,9 +503,11 @@ package.json
   },
   "devDependencies": {
     ...
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-loader": "^2.1.2",
+    "babel-eslint": "10.0.1",
+    "eslint": "6.8.0",
+    "eslint-loader": "3.0.3",
+    "eslint-plugin-babel": "5.3.0",
+    "eslint-plugin-react": "7.18.3",
     ...
   },
   "eslintConfig": ".eslintrc.json"
@@ -544,7 +547,7 @@ package.json
   ...
 ```
 
-webpack/base.config.js
+webpack/base.config.ts
 ```js
     module: {
       rules: [
@@ -568,17 +571,17 @@ package.json
   },
   "devDependencies": {
     ...
-    "babel-jest": "^24.8.0",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "enzyme-to-json": "^3.3.5",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.8.0",
-    "jest-fetch-mock": "^2.1.2",
-    "jest-localstorage-mock": "^2.4.0",
-    "raf": "^3.4.1",
-    "redux-mock-store": "^1.5.3",
-    "sinon": "^7.3.2",
+    "babel-jest": "25.1.0",
+    "enzyme": "3.11.0",
+    "enzyme-adapter-react-16": "1.15.2",
+    "enzyme-to-json": "3.4.4",
+    "identity-obj-proxy": "3.0.0",
+    "jest": "25.1.0",
+    "jest-fetch-mock": "3.0.1",
+    "jest-localstorage-mock": "2.4.0",
+    "raf": "3.4.1",
+    "redux-mock-store": "1.5.4",
+    "sinon": "9.0.0",
     ...
   }
 ```
@@ -640,24 +643,21 @@ jest.config.js
     '<rootDir>/test'
   ],
   setupFilesAfterEnv: [
-    '<rootDir>/test/enzyme.config.js'
-  ],
-  snapshotSerializers: [
+    enzyme.config.tsenzyme.config.tsSerializers: [
     'enzyme-to-json/serializer'
   ],
   testMatch: [
     '**/test/**/*Test.js'
   ],
   transform: {
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/test/__mocks/fileTransformer.js',
-    '^.+\\.(js|jsx)$': 'babel-jest'
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': fileTransformer.js,
+    fileTransformer.js 'babel-jest'
   }
 }
 ```
 
 test/enzyme.config.js
-```js
-require('raf/polyfill');
+enzyme.config.tsaf/polyfill');
 require('jest-localstorage-mock');
 
 const Enzyme = require('enzyme');
@@ -670,7 +670,7 @@ global.fetch = require('jest-fetch-mock');
 
 test/__mocks/fileTransformer.js
 ```js
-const path = require('path');
+fileTransformer.tsre('path');
 
 module.exports = {
   process (src, filename, config, options) {
@@ -694,7 +694,7 @@ package.json
   },
   "devDependencies": {
     ...
-    "rimraf": "^2.6.3",
+    "rimraf": "3.0.2",
     ...
   }
 ```
@@ -705,16 +705,16 @@ package.json
 ```json
   "devDependencies": {
     ...
-    "antd": "^3.19.3",
-    "babel-plugin-import": "^1.12.0",
-    "less": "^3.9.0",
-    "less-loader": "^5.0.0",
-    "moment": "^2.24.0",
+    "antd": "3.26.12",
+    "babel-plugin-import": "1.13.0",
+    "less": "3.11.1",
+    "less-loader": "5.0.0",
+    "moment": "2.24.0",
     ...
   }
 ```
 
-webpack/base.config.js
+webpack/base.config.ts
 ```js
     module: {
       rules: [
@@ -758,10 +758,10 @@ webpack/base.config.js
 
 * language customization
 
-app/src/index.js
+`app/src/index.ts`
 ```js
 ...
-+ import { LocaleProvider } from 'antd';
++ import { ConfigProvider } from 'antd';
 + import moment from 'moment';
 + import ruRu from 'antd/lib/locale-provider/ru_RU';
 + import 'moment/locale/ru';
@@ -774,12 +774,252 @@ app/src/index.js
 
   ReactDOM.render(
     <Provider store={store}>
-+      <LocaleProvider locale={ruRu}>
++      <ConfigProvider locale={ruRu}>
         <ConnectedRouter history={history}>
           <Component/>
         </ConnectedRouter>
-+      </LocaleProvider>
++      </ConfigProvider>
     </Provider>,
     document.getElementById('app')
   );
+```
+
+### Typescript migration
+
+* Install Typescript
+
+package.json
+```json
+  "dependencies": 
+    "connected-react-router": "6.6.1",
+-   "prop-types": "^15.7.2",
+  "devDependencies": {
+    ...
++   "@babel/preset-typescript": "7.8.3",
++   "@types/enzyme": "3.10.5",
++   "@types/enzyme-adapter-react-16": "1.0.6",
++   "@types/fetch-mock": "7.3.2",
++   "@types/jest": "25.1.3",
++   "@types/react": "16.9.23",
++   "@types/react-dom": "16.9.5",
++   "@types/react-redux": "7.1.7",
++   "@types/react-router-dom": "4.3.5",
++   "@types/redux-mock-store": "1.0.2",
++   "@types/sinon": "7.5.2",
++   "@types/webpack": "4.41.7",
++   "@types/webpack-dev-server": "3.10.0",
++   "@types/webpack-env": "1.15.1",
++   "@types/webpack-merge": "4.1.5",
+    ...
++   "@typescript-eslint/eslint-plugin": "2.21.0",
++   "@typescript-eslint/parser": "2.21.0",
+    ...
+-   "babel-eslint": "10.0.1",
+-   "eslint-plugin-babel": "5.3.0",
+    ...
++   "jest-sonar-reporter": "2.0.0",
++   "source-map-loader": "0.2.4",
++   "typescript": "3.8.3",
+    ...
+  }
+  ...
+  "main": "app/src/index.ts",
+  "scripts": {
+    "webpack:start": "webpack-dev-server --progress --colors --config ./webpack/dev.config.ts",
+    "webpack:build": "webpack --config ./webpack/prod.config.ts",
+    ...
+    "eslint": "eslint ./app/**/*.{ts,tsx} ./webpack/*.ts ./test/**/*.{ts,tsx} ",
+  }
+```
+
+tsconfig.json
+```json
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "app",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "strict": true,
+    "strictNullChecks": false,
+    "typeRoots": [
+      "node_modules/@types",
+      "app/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "~app*": ["app*"],
+      "~src*": ["app/src*"],
+      "~actions*": ["app/src/actions*"],
+      "~components*": ["app/src/components*"],
+      "~const*": ["app/src/constants*"],
+      "~dictionaries*": ["app/src/dictionaries*"],
+      "~forms*": ["app/src/forms*"],
+      "~reducers*": ["app/src/reducers*"],
+      "~types*": ["app/src/types*"],
+      "~utils*": ["app/src/utils*"],
+      "~mock*": ["mock-server/app/routes/mock*"],
+      "~test*": ["test*"]
+    },
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  },
+  "include": [
+    "./app/**/*",
+    "./webpack/**/*",
+    "./test/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+.babelrc
+```json
+  "presets": [
+   ...
++  "@babel/preset-typescript"
+   ]
+```
+
+.eslintrc.json
+```json
+-  "parser": "babel-eslint",
++  "parser": "@typescript-eslint/parser",
+-  "parserOptions": {	  
+-   "ecmaVersion": 7,	    
+-   "sourceType": "module",	
+-   "ecmaFeatures": {	
+-     "jsx": true,	
+-     "globalReturn": false,	
+-     "experimentalObjectRestSpread": true	
+-   }
++  "parserOptions": {
++  "project": "./tsconfig.json"
+   ...
+   "plugins": [
+-     "babel",
+-     "react"
++     "@typescript-eslint",
++     "react-hooks",
+   ...
+   "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
++     "plugin:react/recommended",
++     "plugin:@typescript-eslint/eslint-recommended",
++     "plugin:@typescript-eslint/recommended",
++     "plugin:@typescript-eslint/recommended-requiring-type-checking"
+   ...
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+  ... & etc changes of rules
+}
+```
+
+.jest.config.js
+```json
+  moduleNameMapper: {
+  ...
+    '^~types(.*)$': '<rootDir>/app/src/types$1',
+  },
+  ...
+  setupFilesAfterEnv: [
+    '<rootDir>/test/enzyme.config.ts'
+  ],
+  ...
+  testMatch: [
+    '**/test/**/*Test.ts',
+    '**/test/**/*Test.tsx'
+  ],
+  ...
+  testResultsProcessor: 'jest-sonar-reporter',
+  ...
+  transform: {
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/test/__transformers/fileTransformer.js',
+    '^.+\\.tsx?$': 'babel-jest'
+  }
+```
+
+webpack/base.config.ts
+```js
+    entry: {
+      app: path.resolve(settings.rootDir, 'app', 'src', 'index.tsx')
+    },
+    ...
+    {
+      test: /\.jsx?$/,
+      enforce: 'pre',
+      use: ['source-map-loader']
+    },
+    {
+      test: /\.tsx?$/,
+      enforce: 'pre',
+      use: ['eslint-loader'],
+      exclude: /(node_modules)/
+    },
+    {
+      test: /\.tsx?$/,
+      exclude: /node_modules/,
+      use: [
+        loaders.getCacheLoader(path.resolve(settings.cacheDir, 'js')),
+        loaders.getThreadLoader('js'),
+        {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: path.resolve(settings.cacheDir, 'babel')
+          }
+        }
+      ]
+    }
+    ...
+    resolve: {
+      alias: settings.aliases,
+      extensions: ['.ts', '.tsx', '.js']
+    },
+```
+
+* Sonar settings (Maven 3 `pom.xml`)
+
+```xml
+  <sonar.sources>app</sonar.sources>
+  <sonar.projectKey>new-begining</sonar.projectKey>
+  <sonar.inclusions>app/src/**</sonar.inclusions>
+- <sonar.javascript.lcov.reportPath>coverage/lcov.info</sonar.javascript.lcov.reportPath>
++ <sonar.typescript.lcov.reportPath>coverage/lcov.info</sonar.typescript.lcov.reportPath>
++ <sonar.testExecutionReportPaths>test-report.xml</sonar.testExecutionReportPaths>
+```
+
+### async/await Install
+
+package.json
+```json
+  "devDependencies": {
+    ...
+    "@babel/plugin-transform-runtime": "7.8.3",
+    "@babel/runtime": "7.8.4",
+    ...
+  }
+```
+
+.babelrc
+```json
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-dynamic-import",
++   [
++     "@babel/plugin-transform-runtime",
++     {
++       "regenerator": true
++     }
++   ],
 ```

@@ -8,3 +8,4 @@
 
 package-lock.json
 *.report.html
+/test-report.xml

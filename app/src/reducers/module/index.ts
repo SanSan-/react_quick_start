@@ -4,9 +4,9 @@ const initialState = {
   module: null
 };
 
-export default function (state = initialState, action) {
+export default (state = initialState, action): object => {
   if (action.type === LOCATION_CHANGE) {
     return state;
   }
   return state;
-}
+};

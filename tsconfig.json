@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "app",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "strict": true,
+    "strictNullChecks": false,
+    "typeRoots": [
+      "node_modules/@types",
+      "app/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "~app*": ["app*"],
+      "~src*": ["app/src*"],
+      "~actions*": ["app/src/actions*"],
+      "~components*": ["app/src/components*"],
+      "~const*": ["app/src/constants*"],
+      "~dictionaries*": ["app/src/dictionaries*"],
+      "~forms*": ["app/src/forms*"],
+      "~reducers*": ["app/src/reducers*"],
+      "~types*": ["app/src/types*"],
+      "~utils*": ["app/src/utils*"],
+      "~mock*": ["mock-server/app/routes/mock*"],
+      "~test*": ["test*"]
+    },
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  },
+  "include": [
+    "./app/**/*",
+    "./webpack/**/*",
+    "./test/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
