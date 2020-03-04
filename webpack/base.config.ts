@@ -58,7 +58,7 @@ module.exports = () => merge([
         },
         {
           test: /\.(png|gif|jpe?g)$/,
-          use: ['file-loader?publicPath=../&name=img/[hash].[ext]']
+          use: ['file-loader?publicPath=./&name=img/[hash].[ext]']
         },
         {
           test: /\.(svg|woff|woff2|eot|ttf)$/,

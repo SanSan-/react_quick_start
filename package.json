@@ -5,7 +5,7 @@
   "main": "app/src/index.ts",
   "scripts": {
     "webpack:start": "webpack-dev-server --progress --colors --config ./webpack/dev.config.ts",
-    "webpack:build": "webpack --config ./webpack/prod.config.ts",
+    "webpack:build": "set NODE_ENV=production&& webpack --config ./webpack/prod.config.ts",
     "webpack:watch": "npm run webpack:build -- --progress --colors --watch",
     "test": "jest",
     "clear": "rimraf .cache && rimraf node_modules/.cache && rimraf dist && rimraf coverage",
