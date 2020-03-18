@@ -144,7 +144,7 @@ index.html
 </body>
 ```
 
-* Optimization: minimization and uglyfying
+* Optimization: minimization and uglyfying (ecma 5 is for better compatibility with IE 11)
 
 webpack/prod.config.ts
 ```js
@@ -159,7 +159,7 @@ webpack/prod.config.ts
         new TerserJsPlugin({
           parallel: true,
           terserOptions: {
-            ecma: 6
+            ecma: 5
           }
         })
       ]
@@ -467,6 +467,31 @@ webpack/base.config.ts
 +               }
               ]
             }
+          ]
+        }
+```
+
+* Babel produce some node_modules 
+
+webpack/prod.config.ts
+```js
+        module: {
+          rules: [
+            {
++             test: /\.jsx?$/,
++             include: [
++               path.resolve(settings.nodeModulesDir, 'moudule1'),
++               path.resolve(settings.nodeModulesDir, 'moudule2')
++             ],
++             use: [
++               {
++                 loader: 'babel-loader',
++                 options: {
++                   compact: false
++                 }
++               }
++             ]
++           }
           ]
         }
 ```

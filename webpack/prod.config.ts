@@ -49,7 +49,7 @@ const prodConfig = () => merge([
         new TerserJsPlugin({
           parallel: true,
           terserOptions: {
-            ecma: 6
+            ecma: 5
           }
         }),
         new OptimizeCssAssetsPlugin({})
