@@ -6,7 +6,7 @@ const DynamicComponent = React.lazy(() => import('../DynamicComponent'));
 const Layout: React.FC = (): ReactElement => <div id='simple_layout'>
   Layout
   <Suspense fallback={<div>Loading...</div>}>
-    <DynamicComponent />
+    <DynamicComponent/>
   </Suspense>
 </div>;
 

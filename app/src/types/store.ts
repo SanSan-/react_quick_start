@@ -1,10 +1,10 @@
 import { RouterState } from 'connected-react-router';
 
 interface ModuleStateType {
-    module?: string;
+  module?: string;
 }
 
 export interface GeneralStateType {
-    app?: ModuleStateType;
-    router: RouterState;
+  app?: ModuleStateType;
+  router: RouterState;
 }

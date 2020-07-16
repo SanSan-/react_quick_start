@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { Component, ReactElement } from 'react';
 import { Store } from 'redux';
 import { Provider } from 'react-redux';
@@ -13,7 +12,7 @@ export const mockStore = (store: Store): MockStore => configStore([thunk])(store
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 export const mount2dom = (
   child: ReactElement,
-  options: { context: { store: { getState: () => Store; dispatch: () => void; subscribe: () => void } } }
+  options: { context: { store: Store } }
 ): ReactWrapper<any, Record<string, unknown>, Component<Record<string, unknown>,
     Record<string, unknown>, unknown>> =>
   mount(<Provider store={options.context.store}>

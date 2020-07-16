@@ -1,18 +1,17 @@
-/* eslint-disable no-undef */
 import React from 'react';
-import { Store } from 'redux';
 import { spy } from 'sinon';
 
 import App from '~components/App';
 
 import { mockOptions } from '~test/__mocks/state';
 import { mount2dom } from '~test/__mocks/utils';
+import { GeneralStateType } from '~types/store';
 
 describe('Render component pages test', () => {
 
   it('App component test: should render', () => {
     const dispatch = spy();
-    const mockState: Store = {
+    const mockState: GeneralStateType = {
       app: {},
       router: {
         location: {
