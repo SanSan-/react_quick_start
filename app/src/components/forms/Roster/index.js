@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Button, Checkbox, Col, Collapse, DatePicker, Form, Input, message, Radio, Row, Select } from 'antd';
-import ResultTable from '../ResultTable';
+import ResultTable from '../../module/ResultTable';
 import { rowHeaders } from '~constants/dictionary/headers';
 import {
   thingsFilter,
@@ -166,20 +166,20 @@ class Roster extends PureComponent {
   renderDatePicker = () => (<div>
     <div>
       <b>Loading</b> <span style={{ float: 'right', marginRight: '12%' }}>
-      <a id={'clearDateRangeId'}
-         onClick={() => this.setDateRange('dateStart', 'dateEnd', null)}>clear</a></span>
+        <a id={'clearDateRangeId'}
+          onClick={() => this.setDateRange('dateStart', 'dateEnd', null)}>clear</a></span>
     </div>
     <Item label={'from'} htmlFor={'dateStart'}>
       <DatePicker size={FORM_ELEMENT_SIZE} value={this.state.filter.dateStart}
-                  onChange={this.handleSelector('dateStart')}/>
+        onChange={this.handleSelector('dateStart')}/>
     </Item>
     <Item label={'to'} htmlFor={'dateEnd'}>
       <DatePicker size={FORM_ELEMENT_SIZE} value={this.state.filter.dateEnd}
-                  onChange={this.handleSelector('dateEnd')}/>
+        onChange={this.handleSelector('dateEnd')}/>
     </Item>
     <div>
       <a id={'setDateRangeId'}
-         onClick={() => this.setDateRange('dateStart', 'dateEnd', moment())}>today</a>
+        onClick={() => this.setDateRange('dateStart', 'dateEnd', moment())}>today</a>
     </div>
   </div>);
 
@@ -188,23 +188,23 @@ class Roster extends PureComponent {
       <b>Main</b>
     </div>
     <Item label={'number'} hasFeedback
-          validateStatus={this.state.validators.rosterNumber.validateStatus}
-          help={this.state.validators.rosterNumber.help}>
+      validateStatus={this.state.validators.rosterNumber.validateStatus}
+      help={this.state.validators.rosterNumber.help}>
       <Input size={FORM_ELEMENT_SIZE} placeholder={'XXX'} id={'rosterNumber'}
-             value={this.state.filter.rosterNumber}
-             onBlur={this.validateInput('rosterNumber', numValidator, 'Enter any digits')}
-             onChange={this.handleInput('rosterNumber')}
-             allowClear={true}/>
+        value={this.state.filter.rosterNumber}
+        onBlur={this.validateInput('rosterNumber', numValidator, 'Enter any digits')}
+        onChange={this.handleInput('rosterNumber')}
+        allowClear={true}/>
     </Item>
     <Item label={'type'}>
       <Select size={FORM_ELEMENT_SIZE} id={'rosterType'} value={this.state.filter.rosterType}
-              onChange={this.handleSelector('rosterType')}>
+        onChange={this.handleSelector('rosterType')}>
         {typesFilter.toJS().map((typeItem) => (<Option key={typeItem}>{typeItem}</Option>))}
       </Select>
     </Item>
     <Item label={'is valid'}>
       <Checkbox size={FORM_ELEMENT_SIZE} value={this.state.filter.isRosterValidation}
-                onChange={this.handleCheckbox('isRosterValidation')}/>
+        onChange={this.handleCheckbox('isRosterValidation')}/>
     </Item>
   </div>);
 
@@ -213,19 +213,19 @@ class Roster extends PureComponent {
       <b>Advanced</b>
     </div>
     <Item label={'name'} hasFeedback
-          validateStatus={this.state.validators.rosterName.validateStatus}
-          help={this.state.validators.rosterName.help}>
+      validateStatus={this.state.validators.rosterName.validateStatus}
+      help={this.state.validators.rosterName.help}>
       <TextArea size={FORM_ELEMENT_SIZE} autosize={{ minRows: 2, maxRows: 6 }}
-                placeholder={'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'}
-                id={'rosterName'}
-                value={this.state.filter.rosterName}
-                onBlur={this.validateInput('rosterName', textValidator, 'Maximum 255 symbols')}
-                onChange={this.handleInput('rosterName')}/>
+        placeholder={'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'}
+        id={'rosterName'}
+        value={this.state.filter.rosterName}
+        onBlur={this.validateInput('rosterName', textValidator, 'Maximum 255 symbols')}
+        onChange={this.handleInput('rosterName')}/>
     </Item>
   </div>);
 
   renderThings = (startSlice, endSlice) => <Radio.Group size={'large'} value={this.state.filter.otherThing.value}
-                                                        onChange={this.handleRadio('otherThing')}>
+    onChange={this.handleRadio('otherThing')}>
     {thingsFilter.toJS().slice(startSlice, endSlice)
       .map((thing, i) => (<Radio.Button value={thing.value} key={`thing-${i}`}>
         {thing.description}
@@ -238,9 +238,9 @@ class Roster extends PureComponent {
     </div>
     <Item label={'status'} labelCol={{ span: 2 }} wrapperCol={{ span: 21 }}>
       <Select size={FORM_ELEMENT_SIZE} id={'otherStatus'} placeholder={'any'}
-              mode='multiple'
-              value={this.state.filter.otherStatus}
-              onChange={this.handleSelector('otherStatus')}>
+        mode='multiple'
+        value={this.state.filter.otherStatus}
+        onChange={this.handleSelector('otherStatus')}>
         {statusFilter.toJS().map((statusItem) => (<Option key={statusItem.id}>{statusItem.description}</Option>))}
       </Select>
     </Item>
@@ -255,14 +255,12 @@ class Roster extends PureComponent {
     </Item>
   </div>);
 
-  renderSearch = () => {
-    return <div id='simple_layout'>
-      <Search id={'roster-search-field'}
-              placeholder={'Find some rosters by name or other things'}
-              onSearch={this.handleSearch}
-              style={{ width: 300 }}/>
-    </div>;
-  };
+  renderSearch = () => <div id='simple_layout'>
+    <Search id={'roster-search-field'}
+      placeholder={'Find some rosters by name or other things'}
+      onSearch={this.handleSearch}
+      style={{ width: 300 }}/>
+  </div>;
 
   renderTable = () => {
     let i = 0;
@@ -271,12 +269,12 @@ class Roster extends PureComponent {
       return { rowNum: i, ...item };
     });
     return <ResultTable data={tableData}
-                        totalRecords={3}
-                        pageNum={0}
-                        pageSize={10}
-                        paginationCallback={() => {
-                        }}
-                        headers={rowHeaders}
+      totalRecords={3}
+      pageNum={0}
+      pageSize={10}
+      paginationCallback={() => {
+      }}
+      headers={rowHeaders}
     />;
   };
 
