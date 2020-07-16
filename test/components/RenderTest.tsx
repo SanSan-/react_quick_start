@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
+import { Store } from 'redux';
 import { spy } from 'sinon';
 
 import App from '~components/App';
@@ -11,7 +12,7 @@ describe('Render component pages test', () => {
 
   it('App component test: should render', () => {
     const dispatch = spy();
-    const mockState = {
+    const mockState: Store = {
       app: {},
       router: {
         location: {

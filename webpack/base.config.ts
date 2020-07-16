@@ -1,7 +1,7 @@
-/* eslint-disable no-process-env, no-undef, @typescript-eslint/no-var-requires,
-@typescript-eslint/explicit-function-return-type */
+import { Configuration } from 'webpack';
+
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 /* VERSION (from git tags), BRANCH and COMMIT to files header */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -9,7 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const settings = require('./settings');
 const loaders = require('./loaders');
 
-module.exports = () => merge([
+module.exports = (): Configuration => merge([
   {
     context: settings.rootDir,
     entry: {
@@ -51,7 +51,9 @@ module.exports = () => merge([
             {
               loader: 'less-loader',
               options: {
-                javascriptEnabled: true
+                lessOptions: {
+                  javascriptEnabled: true
+                }
               }
             }
           ]
@@ -62,7 +64,7 @@ module.exports = () => merge([
         },
         {
           test: /\.(svg|woff|woff2|eot|ttf)$/,
-          use: ['file-loader?publicPath=../&name=fonts/[hash].[ext]?' + Date.now()]
+          use: [`file-loader?publicPath=../&name=fonts/[hash].[ext]?${Date.now()}`]
         },
         {
           test: /\.jsx?$/,

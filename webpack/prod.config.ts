@@ -1,7 +1,7 @@
-/* eslint-disable no-process-env, no-undef, @typescript-eslint/no-var-requires,
-@typescript-eslint/explicit-function-return-type */
+import { Configuration } from 'webpack';
+
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 /* VERSION (from git tags), BRANCH and COMMIT to files header */
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
@@ -12,17 +12,18 @@ const TerserJsPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const baseConfig = require('./base.config');
-const settings = require('./settings');
+const settings: { resourcePrefix: string, htmlPlugin: Record<string, unknown> } = require('./settings');
 
-const gitRevisionPlugin = new GitRevisionPlugin({ branch: true, lightweightTags: true });
-const versionComment = '/* Version ' + gitRevisionPlugin.version() + '; branch: ' +
-  gitRevisionPlugin.branch() + '; commit hash: ' + gitRevisionPlugin.commithash() + ' */';
+const gitRevisionPlugin: { version: () => string, branch: () => string, commithash: () => string } =
+    new GitRevisionPlugin({ branch: true, lightweightTags: true });
+/* eslint-disable-next-line max-len */
+const versionComment = `/* Version ${gitRevisionPlugin.version()}; branch: ${gitRevisionPlugin.branch()}; commit hash: ${gitRevisionPlugin.commithash()} */`;
 
-const prodConfig = () => merge([
+const prodConfig = (): Configuration => merge([
   {
     mode: 'production',
     output: {
-      filename: './js/[name].bundle' + settings.resourcePrefix + '.js'
+      filename: `./js/[name].bundle${settings.resourcePrefix}.js`
     },
     plugins: [
       new webpack.DefinePlugin({
@@ -33,7 +34,7 @@ const prodConfig = () => merge([
         HTTP_BRIDGE_SERVER_PATH: JSON.stringify('../httpbridge-server')
       }),
       new MiniCssExtractPlugin({
-        filename: './css/[name].bundle' + settings.resourcePrefix + '.css',
+        filename: `./css/[name].bundle${settings.resourcePrefix}.css`,
         allChunks: true
       }),
       new HtmlWebpackPlugin(settings.htmlPlugin),

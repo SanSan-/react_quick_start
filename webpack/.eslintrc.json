@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "no-process-env": 0,
+    "no-undef": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-unsafe-return": 0,
+    "@typescript-eslint/no-unsafe-assignment": 0,
+    "@typescript-eslint/no-unsafe-member-access": 0,
+    "@typescript-eslint/no-unsafe-call": 0
+  }
+}

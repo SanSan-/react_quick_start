@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
-import React from 'react';
+import React, { Component, ReactElement } from 'react';
+import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { mount, ReactWrapper } from 'enzyme';
@@ -7,10 +8,16 @@ import configStore, { MockStore } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { history } from '~src/stores/configureStore';
 
-export const mockStore = (store): MockStore => configStore([thunk])(store);
+export const mockStore = (store: Store): MockStore => configStore([thunk])(store);
 
-export const mount2dom = (child, options): ReactWrapper => mount(<Provider store={options.context.store}>
-  <ConnectedRouter history={history}>
-    {child}
-  </ConnectedRouter>
-</Provider>, { ...options });
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+export const mount2dom = (
+  child: ReactElement,
+  options: { context: { store: { getState: () => Store; dispatch: () => void; subscribe: () => void } } }
+): ReactWrapper<any, Record<string, unknown>, Component<Record<string, unknown>,
+    Record<string, unknown>, unknown>> =>
+  mount(<Provider store={options.context.store}>
+    <ConnectedRouter history={history}>
+      {child}
+    </ConnectedRouter>
+  </Provider>, { ...options });

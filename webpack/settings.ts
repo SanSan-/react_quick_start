@@ -1,4 +1,3 @@
-/* eslint-disable no-process-env, no-undef, @typescript-eslint/no-var-requires */
 const path = require('path');
 
 const resourcePrefix = '';

@@ -4,7 +4,7 @@ const initialState = {
   module: null
 };
 
-export default (state = initialState, action): object => {
+export default (state = initialState, action: { type: string }): Record<string, unknown> => {
   if (action.type === LOCATION_CHANGE) {
     return state;
   }
