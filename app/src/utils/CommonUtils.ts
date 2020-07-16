@@ -12,13 +12,11 @@ export const isEmptyArray = <T> (value: T): boolean => !(value && value instance
 
 export const isMapOrList = <T> (value: T): boolean => value instanceof Immutable.Map || value instanceof Immutable.List;
 
-export const isValidImmutable = <T extends number> (value: T): boolean => value && isMapOrList(value) && value.size > 0;
-
 export const isIE = (): boolean => false || !!document.documentMode;
 
 export const isClient = (): boolean => typeof window === Type.OBJECT;
 
-export const filterInnerObject = <T> (
+export const filterInnerObject = <T extends Record<string, unknown>> (
   obj: Record<string, T>,
   filterKey: string,
   filterValue: string

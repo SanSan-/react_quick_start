@@ -11,7 +11,7 @@ interface Props {
 const DynamicComponent: React.FC = (props: Props): ReactElement => <div id='simple_layout'>
   DynamicComponent
   <Button onClick={() => {
-    props.push('roster');
+    props.push('/roster');
   }}>Search</Button>
 </div>;
 

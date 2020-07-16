@@ -1,15 +1,13 @@
-/* eslint-disable no-undef */
 import React from 'react';
-
-import Roster from '~components/Roster';
+import Roster from '~components/forms/Roster';
 import { Button, Input, message } from 'antd';
-
-import { mockOptions } from '../__mocks/state';
 import { mount2dom } from '../__mocks/utils';
 import moment from 'moment';
-import { ANT_DATE_FORMAT, EMPTY_STRING } from '~constants/common';
+import { ANT_DATE_FORMAT, EMPTY_STRING } from '~const/common';
+import { mockOptions } from '~test/__mocks/state';
+import { GeneralStateType } from '~types/store';
 
-const mockState = {
+const mockState: GeneralStateType = {
   app: {},
   router: {
     location: {
@@ -27,9 +25,6 @@ describe('Roster form component test', () => {
     const handleMessageWarning = jest.spyOn(message, 'warning');
     const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));
     wrapper.find('.ant-collapse-header').first().simulate('click');
-    const component = wrapper.find('Roster');
-    // eslint-disable-next-line no-unused-vars
-    const handleRosterSearch = jest.spyOn(component.instance(), 'handleSearch');
     const button = wrapper.find(Search).find('.ant-input-search-icon').first();
     button.simulate('click');
     return expect(handleMessageWarning).toHaveBeenCalled();

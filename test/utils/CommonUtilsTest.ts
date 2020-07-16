@@ -1,15 +1,6 @@
-/* eslint-disable no-undef */
-import * as Immutable from 'immutable';
-import { isEmpty, isEmptyObject, isEmptyArray, isMapOrList, isValidImmutable, isIE } from '~utils/CommonUtils';
+import { isEmpty, isEmptyArray, isEmptyObject, isIE, isMapOrList } from '~utils/CommonUtils';
 
 describe('function isMapOrList', () => {
-
-  it('should return true if input is Immutable.Map or Immutable.List', () => {
-    expect(isMapOrList(Immutable.fromJS(['1', '2']))).toEqual(true);
-    expect(isMapOrList(Immutable.fromJS([]))).toEqual(true);
-    expect(isMapOrList(Immutable.fromJS({ prop1: '1', prop2: '2' }))).toEqual(true);
-    expect(isMapOrList(Immutable.fromJS({}))).toEqual(true);
-  });
 
   it('should return false if input is not Immutable.Map or Immutable.List', () => {
     expect(isMapOrList('1')).toEqual(false);
@@ -20,34 +11,6 @@ describe('function isMapOrList', () => {
     expect(isMapOrList([])).toEqual(false);
     expect(isMapOrList({ prop1: '1', prop2: '2' })).toEqual(false);
     expect(isMapOrList(['1', '2'])).toEqual(false);
-  });
-
-});
-
-describe('function isValidImmutable', () => {
-
-  it('should return true if input is Immutable.Map or Immutable.List and size > 0', () => {
-    expect(isValidImmutable(Immutable.fromJS(['1', '2']))).toEqual(true);
-    expect(isValidImmutable(Immutable.fromJS({ prop1: '1', prop2: '2' }))).toEqual(true);
-  });
-
-  it('should return false if input is Immutable.Map or Immutable.List and size = 0', () => {
-    expect(isValidImmutable(Immutable.fromJS([]))).toEqual(false);
-    expect(isValidImmutable(Immutable.fromJS({}))).toEqual(false);
-  });
-
-  it('should return false if input is not Immutable.Map or Immutable.List', () => {
-    expect(isValidImmutable('1')).toEqual(false);
-    expect(isValidImmutable({})).toEqual(false);
-    expect(isValidImmutable([])).toEqual(false);
-    expect(isValidImmutable({ prop1: '1', prop2: '2' })).toEqual(false);
-    expect(isValidImmutable(['1', '2'])).toEqual(false);
-  });
-
-  it('should return null and undefined if input is null and undefined', () => {
-    expect(isValidImmutable(null)).toEqual(null);
-    /* eslint no-undefined: 0 */
-    expect(isValidImmutable(undefined)).toEqual(undefined);
   });
 
 });

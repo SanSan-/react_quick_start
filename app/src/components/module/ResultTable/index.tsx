@@ -43,7 +43,7 @@ const ResultTable: React.FC<Props> = ({
     tableWidth: isEmptyArray(headers) ? 0 : headers.map((header) => header.width)
       .reduce((acc, val) => acc + val, 0)
   });
-  const [sortedInfo, setSortedinfo] = useState(initialSortedInfo);
+  const [sortedInfo, setSortedInfo] = useState(initialSortedInfo);
   const windowSize = useWindowResize();
   const components = { header: { cell: ResizableTitle } };
   const dataSource = isEmptyArray(data) ? null : data.map((element, i) => ({ ...element, key: i }));
@@ -71,7 +71,7 @@ const ResultTable: React.FC<Props> = ({
     _filters: Partial<Record<keyof string, string[]>>,
     { column, order }: { column: Header, order: SortOrder }
   ): void => {
-    setSortedinfo({ order: order || null, field: column ? column.sortName : null });
+    setSortedInfo({ order: order || null, field: column ? column.sortName : null });
     callback(current, newPageSize, column ? column.sortName : null, Sort[order] || SortType.NONE);
   };
   return isEmptyArray(dataSource) ? null : (

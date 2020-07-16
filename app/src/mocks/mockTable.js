@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { DATE_FORMAT } from '~constants/common';
+import { DATE_FORMAT } from '~const/common';
 
 export const getRows = [
   {
