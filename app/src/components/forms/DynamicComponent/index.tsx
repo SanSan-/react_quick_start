@@ -5,7 +5,7 @@ import { CallHistoryMethodAction, push } from 'connected-react-router';
 import { LocationState, Path } from 'history';
 
 interface Props {
-  push: <S = LocationState>(path: Path, state?: S) => CallHistoryMethodAction<[ Path, S? ]>;
+  push: <S = LocationState>(path: Path, state?: S) => CallHistoryMethodAction<[Path, S?]>;
 }
 
 const DynamicComponent: React.FC = (props: Props): ReactElement => <div id='simple_layout'>

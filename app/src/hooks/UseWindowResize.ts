@@ -3,8 +3,8 @@ import { isClient } from '~utils/CommonUtils';
 import { EMPTY_FUNC } from '~const/common';
 
 interface WindowResizeType {
-    width?: number;
-    height?: number;
+  width?: number;
+  height?: number;
 }
 
 const useWindowResize = (): WindowResizeType => {

@@ -11,22 +11,22 @@ import { PaginationConfig } from 'antd/lib/pagination';
 import { SortOrder } from 'antd/lib/table/interface';
 
 interface Props {
-    data?: Array<Record<string, unknown>>;
-    defaultExpandAllRows?: boolean;
-    headers?: Array<Header>;
-    totalRecords?: number;
-    page?: number;
-    pageSize?: number;
-    pageSizeOptions?: Array<string>;
-    callback?: (currentPage: number, pageSize: number, newSortKey: string, newSortType: SortType) => void;
-    rowSelection?: Record<string, unknown>;
-    showPagination?: boolean;
-    style?: React.CSSProperties;
+  data?: Array<Record<string, unknown>>;
+  defaultExpandAllRows?: boolean;
+  headers?: Array<Header>;
+  totalRecords?: number;
+  page?: number;
+  pageSize?: number;
+  pageSizeOptions?: Array<string>;
+  callback?: (currentPage: number, pageSize: number, newSortKey: string, newSortType: SortType) => void;
+  rowSelection?: Record<string, unknown>;
+  showPagination?: boolean;
+  style?: React.CSSProperties;
 }
 
 interface SortedInfoType {
-    field?: string;
-    order?: SortOrder;
+  field?: string;
+  order?: SortOrder;
 }
 
 const initialSortedInfo: SortedInfoType = {
@@ -34,17 +34,20 @@ const initialSortedInfo: SortedInfoType = {
   order: null
 };
 
-const ResultTable: React.FC<Props> = ({ data, defaultExpandAllRows, headers, page, pageSize, rowSelection,
-  pageSizeOptions, totalRecords, callback, showPagination, style }: Props): ReactElement => {
+const ResultTable: React.FC<Props> = ({
+  data, defaultExpandAllRows, headers, page, pageSize, rowSelection,
+  pageSizeOptions, totalRecords, callback, showPagination, style
+}: Props): ReactElement => {
   const [state, setState] = useState({
     columns: headers,
-    tableWidth: isEmptyArray(headers) ? 0 : headers.map((header) => header.width).reduce((acc, val) => acc + val, 0)
+    tableWidth: isEmptyArray(headers) ? 0 : headers.map((header) => header.width)
+      .reduce((acc, val) => acc + val, 0)
   });
   const [sortedInfo, setSortedinfo] = useState(initialSortedInfo);
   const windowSize = useWindowResize();
   const components = { header: { cell: ResizableTitle } };
   const dataSource = isEmptyArray(data) ? null : data.map((element, i) => ({ ...element, key: i }));
-  const handleResize = (index: number) => (_e: Event, { size }: { size: { width: number, height: number }}): void => {
+  const handleResize = (index: number) => (_e: Event, { size }: { size: { width: number, height: number } }): void => {
     setState(({ columns }) => {
       const nextColumns = [...columns];
       nextColumns[index] = {
@@ -66,7 +69,8 @@ const ResultTable: React.FC<Props> = ({ data, defaultExpandAllRows, headers, pag
   const handleChange = (
     { current, pageSize: newPageSize }: PaginationConfig,
     _filters: Partial<Record<keyof string, string[]>>,
-    { column, order }: { column: Header, order: SortOrder }): void => {
+    { column, order }: { column: Header, order: SortOrder }
+  ): void => {
     setSortedinfo({ order: order || null, field: column ? column.sortName : null });
     callback(current, newPageSize, column ? column.sortName : null, Sort[order] || SortType.NONE);
   };

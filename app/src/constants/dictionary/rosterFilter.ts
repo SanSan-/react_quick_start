@@ -1,19 +1,7 @@
 import * as Immutable from 'immutable';
-
-function Status (id, description) {
-  return {
-    id,
-    description
-  };
-}
-
-function Thing (value, description, weight) {
-  return {
-    value,
-    description,
-    weight
-  };
-}
+import Status from '~dictionaries/Status';
+import Thing from '~dictionaries/Thing';
+import { EMPTY_STRING } from '~const/common';
 
 export const statusFilter = Immutable.fromJS([
   new Status('1', 'Status 1'),
@@ -56,10 +44,10 @@ export const defaultFilter = Immutable.fromJS({
 export const defaultValidators = Immutable.fromJS({
   rosterNumber: {
     validateStatus: null,
-    help: ''
+    help: EMPTY_STRING
   },
   rosterName: {
     validateStatus: null,
-    help: ''
+    help: EMPTY_STRING
   }
 });

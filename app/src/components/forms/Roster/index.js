@@ -6,11 +6,11 @@ import { Button, Checkbox, Col, Collapse, DatePicker, Form, Input, message, Radi
 import ResultTable from '../../module/ResultTable';
 import { rowHeaders } from '~constants/dictionary/headers';
 import {
-  thingsFilter,
-  statusFilter,
-  typesFilter,
+  defaultFilter,
   defaultValidators,
-  defaultFilter
+  statusFilter,
+  thingsFilter,
+  typesFilter
 } from '~constants/dictionary/rosterFilter';
 import { filterInnerObject, isEmpty, isEmptyObject } from '~utils/CommonUtils';
 import { numValidator, textValidator } from '~utils/ValidationUtils';

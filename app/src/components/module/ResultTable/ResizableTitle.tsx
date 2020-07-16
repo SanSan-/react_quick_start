@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import { Resizable, ResizeCallbackData } from 'react-resizable';
 
 interface ResizableType {
-    width?: number;
-    onResize: (e: React.SyntheticEvent, data: ResizeCallbackData) => unknown;
+  width?: number;
+  onResize: (e: React.SyntheticEvent, data: ResizeCallbackData) => unknown;
 }
 
 const ResizableTitle = (props: ResizableType): ReactElement => {
@@ -15,7 +15,7 @@ const ResizableTitle = (props: ResizableType): ReactElement => {
     width={width}
     height={0}
     onResize={onResize}
-    draggableOpts={{ enableUserSelecthack: false }}>
+    draggableOpts={{ enableUserSelectHack: false }}>
     <th {...restProps} />
   </Resizable>;
 };

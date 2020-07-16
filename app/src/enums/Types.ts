@@ -1,6 +1,6 @@
 enum Type {
-    OBJECT = 'object',
-    UNDEFINED = 'undefined'
+  OBJECT = 'object',
+  UNDEFINED = 'undefined'
 }
 
 export default Type;
