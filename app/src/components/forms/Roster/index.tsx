@@ -17,7 +17,7 @@ import { EMPTY_FUNC, EMPTY_STRING, FORM_ELEMENT_SIZE } from '~const/common';
 import { getRows } from '~src/mocks/mockTable';
 import { Dispatch } from 'redux';
 import { RosterFilterType, ValidatorType, ValidStatusType } from '~types/state';
-import produce from 'immer';
+import produce, { original } from 'immer';
 
 const Panel = Collapse.Panel;
 const Item = Form.Item;
@@ -60,8 +60,8 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
     setValidators(defaultValidators);
   };
   const restoreFiltersFromBuffer = () => {
-    setFilter((state) => produce(state, () => buffer.filter));
-    setValidators((state) => produce(state, () => buffer.validators));
+    setFilter(original(buffer).filter);
+    setValidators(original(buffer).validators);
     setBuffer(initialBufferState);
   };
   const setValidator = (key: string, validateStatus: ValidStatusType, help: string) => {
@@ -87,7 +87,7 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
       setValidator(key, 'error', errorMessage);
     }
   };
-  const updateFilter = (key: string, value: string | boolean | moment.Moment) => {
+  const updateFilter = <K extends keyof RosterFilterType, T extends RosterFilterType[K]> (key: K, value: T) => {
     setFilter((state) => produce(state, (draft) => {
       draft[key] = value;
     }));
@@ -96,7 +96,7 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
   const handleInput = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (isEmpty(value)) {
-      return setValidator(key, null, EMPTY_STRING);
+      setValidator(key, null, EMPTY_STRING);
     }
     updateFilter(key, value);
   };
