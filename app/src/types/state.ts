@@ -1,12 +1,12 @@
-import Status from '~dictionaries/Status';
 import Thing from '~dictionaries/Thing';
 import moment from 'moment';
+import { LabeledValue } from 'antd/lib/select';
 
 export type RosterType = 'all' | 'first' | 'second';
 export type ValidStatusType = '' | 'error' | 'success' | 'warning' | 'validating';
 
 export interface RosterFilterType {
-  [key: string]: moment.Moment | string | boolean | RosterType | Array<Status> | Thing;
+  [key: string]: moment.Moment | string | boolean | RosterType | Array<LabeledValue> | Thing;
 
   dateStart?: moment.Moment;
   dateEnd?: moment.Moment;
@@ -14,7 +14,7 @@ export interface RosterFilterType {
   rosterType?: RosterType;
   isRosterValidation?: boolean;
   rosterName?: string;
-  otherStatus?: Array<Status>;
+  otherStatus?: Array<LabeledValue>;
   otherThing?: Thing;
 }
 

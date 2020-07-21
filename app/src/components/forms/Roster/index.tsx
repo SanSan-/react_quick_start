@@ -17,7 +17,7 @@ import { EMPTY_FUNC, EMPTY_STRING, FORM_ELEMENT_SIZE } from '~const/common';
 import { getRows } from '~src/mocks/mockTable';
 import { Dispatch } from 'redux';
 import { RosterFilterType, ValidatorType, ValidStatusType } from '~types/state';
-import produce, { original } from 'immer';
+import produce from 'immer';
 
 const Panel = Collapse.Panel;
 const Item = Form.Item;
@@ -60,8 +60,8 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
     setValidators(defaultValidators);
   };
   const restoreFiltersFromBuffer = () => {
-    setFilter(original(buffer).filter);
-    setValidators(original(buffer).validators);
+    setFilter(buffer.filter);
+    setValidators(buffer.validators);
     setBuffer(initialBufferState);
   };
   const setValidator = (key: string, validateStatus: ValidStatusType, help: string) => {
@@ -115,7 +115,7 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
       void message.warning('Search field is empty!');
     }
   };
-  const handleSubmit = (callback: { (): void; (arg0: unknown): void; }) => {
+  const handleSubmit = (callback: (filter: RosterFilterType) => void) => {
     if (isEmptyObject(filterInnerObject(validators, 'validateStatus', 'error'))) {
       callback(filter);
     } else {
@@ -200,7 +200,7 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
         value={filter.otherStatus}
         onChange={handleSelector('otherStatus')}
         allowClear={true}>
-        {statusFilter.map((statusItem) => (<Option key={statusItem.id}>{statusItem.description}</Option>))}
+        {statusFilter.map((statusItem) => (<Option key={statusItem.key}>{statusItem.label}</Option>))}
       </Select>
     </Item>
     <Item htmlFor={'otherThing'} labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>

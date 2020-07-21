@@ -1,17 +1,16 @@
-import Status from '~dictionaries/Status';
 import Thing from '~dictionaries/Thing';
 import { EMPTY_STRING } from '~const/common';
 import { RosterFilterType, RosterType, ValidatorType } from '~types/state';
 
 export const statusFilter = [
-  new Status('1', 'Status 1'),
-  new Status('2', 'Status 2'),
-  new Status('3', 'Status 3'),
-  new Status('4', 'Status 4'),
-  new Status('5', 'Status 5'),
-  new Status('6', 'Status 6'),
-  new Status('7', 'Status 7'),
-  new Status('8', 'Status 8')
+  { key: '1', label: 'Status 1' },
+  { key: '2', label: 'Status 2' },
+  { key: '3', label: 'Status 3' },
+  { key: '4', label: 'Status 4' },
+  { key: '5', label: 'Status 5' },
+  { key: '6', label: 'Status 6' },
+  { key: '7', label: 'Status 7' },
+  { key: '8', label: 'Status 8' }
 ];
 
 export const thingsFilter = [
