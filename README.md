@@ -336,6 +336,8 @@ package.json
   }
 ```
 
+`[WARNING] history@^5 is broken. Don't use that version before all issues will resolved`
+
 * Routing with store history
 
 stores/configureStore.ts
