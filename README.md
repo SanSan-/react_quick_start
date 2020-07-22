@@ -588,6 +588,12 @@ webpack/base.config.ts
     }
 ```
 
+* Idea Configuration
+<img src="https://api.monosnap.com/file/download?id=fpA54QvR9ShYiVTnRDyckI8CE3x8x0">
+
+* How to use
+<img src="https://api.monosnap.com/file/download?id=Z3FxWx70Me2Z8a4o0USf13jXRDDqdu">
+
 ### Testing
 
 package.json
