@@ -1,13 +1,11 @@
-import React, { ReactElement, Suspense } from 'react';
+import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 
-const DynamicComponent = React.lazy(() => import('../DynamicComponent'));
+import DynamicComponent from '../DynamicComponent';
 
 const Layout: React.FC = (): ReactElement => <div id='simple_layout'>
   Layout
-  <Suspense fallback={<div>Loading...</div>}>
-    <DynamicComponent/>
-  </Suspense>
+  <DynamicComponent/>
 </div>;
 
 export default connect()(Layout);
