@@ -110,7 +110,7 @@
     "wrapper-webpack-plugin": "2.1.0"
   },
   "resolutions": {
-    "@babel/preset-env": "7.10.4"
+    "@babel/preset-env": "7.11.0"
   },
   "eslintConfig": ".eslintrc.json"
 }

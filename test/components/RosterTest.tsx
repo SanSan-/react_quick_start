@@ -20,7 +20,7 @@ const Search = Input.Search;
 
 describe('Roster form component test', () => {
 
-  it('Roster form test: should call handleSearch()', () => {
+  test('Roster form test: should call handleSearch()', () => {
     const dispatch = jest.fn();
     const handleMessageWarning = jest.spyOn(message, 'warning');
     const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));
@@ -30,7 +30,7 @@ describe('Roster form component test', () => {
     return expect(handleMessageWarning).toHaveBeenCalled();
   });
 
-  it('Roster form test: should not call handleSearch()', () => {
+  test('Roster form test: should not call handleSearch()', () => {
     const dispatch = jest.fn();
     const handleMessageWarning = jest.spyOn(message, 'warning');
     const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));
@@ -51,7 +51,7 @@ describe('Roster form component test', () => {
     input.simulate('blur');
   };
 
-  it('Roster form test: should call ERROR on validate input', () => {
+  test('Roster form test: should call ERROR on validate input', () => {
     const dispatch = jest.fn();
     const callback = jest.fn();
     const wrapper = mount2dom(<Roster dispatch={dispatch} handleSearchCallback={callback}/>, mockOptions(mockState));
@@ -60,7 +60,7 @@ describe('Roster form component test', () => {
     return expect(callback).not.toHaveBeenCalled();
   });
 
-  it('Roster form test: should call SUCCESS on validate input', () => {
+  test('Roster form test: should call SUCCESS on validate input', () => {
     const dispatch = jest.fn();
     const callback = jest.fn();
     const wrapper = mount2dom(<Roster dispatch={dispatch} handleSearchCallback={callback}/>, mockOptions(mockState));
@@ -69,7 +69,7 @@ describe('Roster form component test', () => {
     return expect(callback).toHaveBeenCalled();
   });
 
-  it('Roster form test: should call SUCCESS on validate empty input', () => {
+  test('Roster form test: should call SUCCESS on validate empty input', () => {
     const dispatch = jest.fn();
     const callback = jest.fn();
     const wrapper = mount2dom(<Roster dispatch={dispatch} handleSearchCallback={callback}/>, mockOptions(mockState));
@@ -78,7 +78,7 @@ describe('Roster form component test', () => {
     return expect(callback).toHaveBeenCalled();
   });
 
-  it('Roster form test: should call clearAllFilters() and restoreFiltersFromBuffer()', () => {
+  test('Roster form test: should call clearAllFilters() and restoreFiltersFromBuffer()', () => {
     const dispatch = jest.fn();
     const inputText = '12345';
     const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));
@@ -94,7 +94,7 @@ describe('Roster form component test', () => {
     expect(wrapper.find('#rosterNumber').find('input').instance().value).toEqual(inputText);
   });
 
-  it('Roster form test: should call clearAllFilters() and return clear after change input', () => {
+  test('Roster form test: should call clearAllFilters() and return clear after change input', () => {
     const dispatch = jest.fn();
     const oldText = '12345';
     const newText = '98765';
@@ -111,7 +111,7 @@ describe('Roster form component test', () => {
     expect(wrapper.find('#rosterNumber').find('input').instance().value).toEqual(newText);
   });
 
-  it('Roster form test: should call clearAllFilters() and return clear after set date range change', () => {
+  test('Roster form test: should call clearAllFilters() and return clear after set date range change', () => {
     const dispatch = jest.fn();
     const inputText = '12345';
     const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));

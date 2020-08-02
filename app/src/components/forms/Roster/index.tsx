@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import dayjs, { Dayjs } from 'dayjs';
-import 'antd/es/grid/style/css';
 import { Button, Checkbox, Col, Collapse, DatePicker, Form, Input, message, Radio, Row, Select } from 'antd';
 import ResultTable from '../../module/ResultTable';
 import { rowHeaders } from '~const/dictionary/headers';
