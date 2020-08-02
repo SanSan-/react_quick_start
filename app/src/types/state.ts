@@ -1,15 +1,15 @@
 import Thing from '~dictionaries/Thing';
-import moment from 'moment';
+import { Dayjs } from 'dayjs';
 import { LabeledValue } from 'antd/lib/select';
 
 export type RosterType = 'all' | 'first' | 'second';
 export type ValidStatusType = '' | 'error' | 'success' | 'warning' | 'validating';
 
 export interface RosterFilterType {
-  [key: string]: moment.Moment | string | boolean | RosterType | Array<LabeledValue> | Thing;
+  [key: string]: Dayjs | string | boolean | RosterType | Array<LabeledValue> | Thing;
 
-  dateStart?: moment.Moment;
-  dateEnd?: moment.Moment;
+  dateStart?: Dayjs;
+  dateEnd?: Dayjs;
   rosterNumber?: string;
   rosterType?: RosterType;
   isRosterValidation?: boolean;

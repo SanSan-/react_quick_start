@@ -2,7 +2,7 @@ import React from 'react';
 import Roster from '~components/forms/Roster';
 import { Button, Input, message } from 'antd';
 import { mount2dom } from '../__mocks/utils';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { ANT_DATE_FORMAT, EMPTY_STRING } from '~const/common';
 import { mockOptions } from '~test/__mocks/state';
 import { GeneralStateType } from '~types/store';
@@ -125,9 +125,9 @@ describe('Roster form component test', () => {
     expect(wrapper.find('a#restoreFiltersId')).toHaveLength(0);
     expect(wrapper.find('a#clearAllFiltersId')).toHaveLength(1);
     expect(wrapper.find('[htmlFor=\'dateStart\']').find('input').instance().value)
-      .toEqual(moment().format(ANT_DATE_FORMAT));
+      .toEqual(dayjs().format(ANT_DATE_FORMAT));
     expect(wrapper.find('[htmlFor=\'dateEnd\']').find('input').instance().value)
-      .toEqual(moment().format(ANT_DATE_FORMAT));
+      .toEqual(dayjs().format(ANT_DATE_FORMAT));
     wrapper.find('a#clearDateRangeId').simulate('click');
     expect(wrapper.find('[htmlFor=\'dateStart\']').find('input').instance().value).toEqual(EMPTY_STRING);
     expect(wrapper.find('[htmlFor=\'dateEnd\']').find('input').instance().value).toEqual(EMPTY_STRING);

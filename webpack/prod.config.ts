@@ -15,7 +15,7 @@ const baseConfig = require('./base.config');
 const settings: { resourcePrefix: string, htmlPlugin: Record<string, unknown> } = require('./settings');
 
 const gitRevisionPlugin: { version: () => string, branch: () => string, commithash: () => string } =
-    new GitRevisionPlugin({ branch: true, lightweightTags: true });
+  new GitRevisionPlugin({ branch: true, lightweightTags: true });
 /* eslint-disable-next-line max-len */
 const versionComment = `/* Version ${gitRevisionPlugin.version()}; branch: ${gitRevisionPlugin.branch()}; commit hash: ${gitRevisionPlugin.commithash()} */`;
 

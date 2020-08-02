@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import dayjs, { Dayjs } from 'dayjs';
+import 'antd/es/grid/style/css';
 import { Button, Checkbox, Col, Collapse, DatePicker, Form, Input, message, Radio, Row, Select } from 'antd';
 import ResultTable from '../../module/ResultTable';
 import { rowHeaders } from '~const/dictionary/headers';
@@ -44,7 +45,7 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
     ...defaultValidators
   });
   const [buffer, setBuffer] = useState(initialBufferState);
-  const setDateRange = (startDate: string, endDate: string, value: moment.Moment) => {
+  const setDateRange = (startDate: string, endDate: string, value: Dayjs) => {
     setFilter((state) => produce(state, (draft) => {
       draft[startDate] = value;
       draft[endDate] = value;
@@ -106,7 +107,7 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
   const handleCheckbox = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     updateFilter(key, e.target.checked);
   };
-  const handleSelector = (key: string) => (value: moment.Moment) => {
+  const handleSelector = (key: string) => (value: Dayjs) => {
     updateFilter(key, value);
   };
   const handleSearch = (value: string) => {
@@ -139,7 +140,7 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
     </Item>
     <div>
       <a id={'setDateRangeId'}
-        onClick={() => setDateRange('dateStart', 'dateEnd', moment())}>today</a>
+        onClick={() => setDateRange('dateStart', 'dateEnd', dayjs())}>today</a>
     </div>
   </div>;
   const renderMainFilter = () => <div>

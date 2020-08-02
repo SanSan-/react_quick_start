@@ -1,3 +1,6 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Store } from 'redux';
@@ -5,9 +8,8 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
 import { ConfigProvider } from 'antd';
-import moment from 'moment';
-import ruRu from 'antd/lib/locale-provider/ru_RU';
-import 'moment/locale/ru';
+import ruRu from 'antd/es/locale/ru_RU';
+import 'dayjs/locale/ru';
 
 import configureStore, { history } from './stores/configureStore';
 import App from './components/App';
@@ -15,7 +17,12 @@ import { APP_ID } from '~const/common';
 
 import '../styles/index.scss';
 
-moment.locale('ru');
+import { enableES5 } from 'immer';
+import { isIE } from '~utils/CommonUtils';
+
+if (isIE()) {
+  enableES5();
+}
 
 const render = (Component: React.FunctionComponent, store: Store): void => {
   ReactDOM.render(

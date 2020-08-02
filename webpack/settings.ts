@@ -2,6 +2,7 @@ const path = require('path');
 
 const resourcePrefix = '';
 const rootDir = path.resolve(__dirname, '..');
+const nodeModulesDir = path.resolve(__dirname, '..', 'node_modules');
 const cacheDir = path.resolve(__dirname, '..', 'node_modules', '.cache');
 const aliases = {
   '~app': path.resolve(rootDir, 'app'),
@@ -26,4 +27,4 @@ const htmlPlugin = {
   favicon: './app/resources/favicon.ico'
 };
 
-module.exports = { resourcePrefix, rootDir, cacheDir, aliases, threadLoader, htmlPlugin };
+module.exports = { resourcePrefix, rootDir, cacheDir, nodeModulesDir, aliases, threadLoader, htmlPlugin };
