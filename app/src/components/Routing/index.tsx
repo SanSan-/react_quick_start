@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Layout from '../Layout';
+import Layout from '../forms/Layout';
 import { routes } from '~dictionaries/state';
 
 const Routing = (): ReactElement =>

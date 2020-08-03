@@ -5,6 +5,7 @@ const { merge } = require('webpack-merge');
 
 /* VERSION (from git tags), BRANCH and COMMIT to files header */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 
 const settings = require('./settings');
 const loaders = require('./loaders');
@@ -111,6 +112,9 @@ module.exports = (): Configuration => merge([
         },
         chunks: 'all'
       }
-    }
+    },
+    plugins: [
+      new AntdDayjsWebpackPlugin()
+    ]
   }
 ]);

@@ -1,6 +1,6 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 
-const initialState = {
+const initialState: { module: Record<string, unknown> } = {
   module: null
 };
 

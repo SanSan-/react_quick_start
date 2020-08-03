@@ -9,7 +9,7 @@ import { GeneralStateType } from '~types/store';
 
 describe('Render component pages test', () => {
 
-  it('App component test: should render', () => {
+  test('App component test: should render', () => {
     const dispatch = spy();
     const mockState: GeneralStateType = {
       app: {},
