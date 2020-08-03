@@ -2,7 +2,7 @@
   "name": "react-project",
   "version": "1.0.0",
   "description": "Try React Project",
-  "main": "app/src/index.ts",
+  "main": "app/src/index.tsx",
   "scripts": {
     "webpack:start": "webpack-dev-server --progress --colors --config ./webpack/dev.config.ts",
     "webpack:build": "set NODE_ENV=production&& webpack --config ./webpack/prod.config.ts",

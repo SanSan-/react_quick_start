@@ -1,4 +1,4 @@
-# [typescript 3, webpack 4, react-16, redux 4, react-router 5, babel 7, jest 25, enzyme 3, antd 3] Quick starter
+# [typescript 3, webpack 4, react-16, redux 4, react-router 5, babel 7, jest 26, enzyme 3, antd 4] Quick starter
 
 ### Introduction
 
@@ -7,20 +7,21 @@ This is quick start bundle for quick start development without noisy initializat
 ### Bundle include:
 * main
 - bundler:: webpack 4
-- view:: react 16.12
+- view:: react 16.13
 - routing:: react-router 5
 - state storing:: redux 4, redux-thunk 2.3
 - history routing:: history 4.10, connected-react-router 6.6 
-- type checking:: typescript 3.8
+- type checking:: typescript 3.9
 - js-compiler:: babel 7
+- immutable:: immer 7
 * test
-- test manager:: jest 25.1
+- test manager:: jest 26
 - test environments:: enzyme 3, sinon 7
-- static lint checking:: eslint 6.8
+- static lint checking:: eslint 7.6
 * decoration
-- components:: antd 3.26
-- date:: moment 2.24
-- style:: less 3.9, sass
+- components:: antd 4.5
+- date:: dayjs 1.8
+- style:: less 3, sass
 
 ### Install Webpack
 
@@ -33,16 +34,16 @@ package.json
   },
   "devDependencies": {
     ...
-    "acorn": "7.1.1",
+    "acorn": "7.3.1",
     "cache-loader": "4.1.0",
-    "git-revision-webpack-plugin": "3.0.3",
-    "html-webpack-plugin": "3.2.0",
-    "terser-webpack-plugin": "2.3.5",
+    "git-revision-webpack-plugin": "3.0.6",
+    "html-webpack-plugin": "4.3.0",
+    "terser-webpack-plugin": "3.0.8",
     "thread-loader": "2.1.3",
-    "webpack": "4.42.0",
-    "webpack-cli": "3.3.11",
-    "webpack-dev-server": "3.10.3",
-    "webpack-merge": "4.2.2",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0",
+    "webpack-merge": "5.0.9",
     "wrapper-webpack-plugin": "2.1.0"
     ...
   }
@@ -189,12 +190,12 @@ package.json
 ```json
   "devDependencies": {
     ...
-    "css-loader": "3.4.2",
-    "mini-css-extract-plugin": "0.6.0",
-    "node-sass": "4.13.1",
+    "css-loader": "4.2.0",
+    "mini-css-extract-plugin": "0.9.0",
+    "node-sass": "4.14.1",
     "optimize-css-assets-webpack-plugin": "5.0.3",
-    "sass-loader": "8.0.2",
-    "style-loader": "1.1.3",
+    "sass-loader": "9.0.2",
+    "style-loader": "1.2.1",
     ...
   }
 ```
@@ -293,11 +294,16 @@ package.json
   "dependencies": {
     ...
     "prop-types": "15.7.2",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "react-tooltip": "^3.10.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     ...
-  }
+  },
+     "devDependencies": {
+       ...
+        "@types/react": "16.9.44",
+        "@types/react-dom": "16.9.8",
+       ...
+     }
 ```
 
 ### Install Redux
@@ -306,13 +312,14 @@ package.json
 ```json
   "dependencies": {
     ...
-    "react-redux": "7.2.0",
+    "react-redux": "7.2.1",
     "redux": "4.0.5",
     "redux-thunk": "2.3.0"
     ...
   },
   "devDependencies": {
     ...
+    "@types/react-redux": "7.1.9",
     "redux-devtools-extension": "2.13.8",
     ...
   }
@@ -324,13 +331,15 @@ package.json
 ```json
   "dependencies": {
     ...
-    "connected-react-router": "6.6.1",
-    "react-router": "5.1.2",
-    "react-router-dom": "5.1.2",
+    "connected-react-router": "6.8.0",
+    "react-router": "5.2.0",
+    "react-router-dom": "5.2.0",
     ...
   },
   "devDependencies": {
     ...
+    "@types/react-dom": "16.9.8",
+    "@types/react-router-dom": "5.1.5",
     "history": "4.10.1",
     ...
   }
@@ -421,15 +430,20 @@ package.json
 ```json
   "devDependencies": {
     ...
-    "@babel/core": "7.8.6",
-    "@babel/plugin-proposal-class-properties": "7.8.3",
-    "@babel/plugin-syntax-dynamic-import": "7.8.3",
-    "@babel/preset-env": "7.8.6",
-    "@babel/preset-react": "7.8.3",
-    "@babel/register": "7.8.6",
+    "@babel/core": "7.11.0",
+    "@babel/plugin-proposal-class-properties": "7.10.4",
+    "@babel/plugin-proposal-numeric-separator": "7.10.4",
+    "@babel/plugin-syntax-dynamic-import": "7.10.4",
+    "@babel/polyfill": "7.10.4",
+    "@babel/preset-env": "7.11.0",
+    "@babel/preset-react": "7.10.4",
+    "@babel/register": "7.10.5",
     "acorn-dynamic-import": "4.0.0",
-    "babel-loader": "8.0.6",
+    "babel-loader": "8.1.0",
     ...
+  },
+  "resolutions": {
+    "@babel/preset-env": "7.11.0"
   },
   "browserslist": [
     "last 1 version",
@@ -604,17 +618,18 @@ package.json
   },
   "devDependencies": {
     ...
-    "babel-jest": "25.1.0",
+    "babel-jest": "26.2.2",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
-    "enzyme-to-json": "3.4.4",
+    "enzyme-to-json": "3.5.0",
     "identity-obj-proxy": "3.0.0",
-    "jest": "25.1.0",
-    "jest-fetch-mock": "3.0.1",
-    "jest-localstorage-mock": "2.4.0",
+    "jest": "26.2.2",
+    "jest-fetch-mock": "3.0.3",
+    "jest-localstorage-mock": "2.4.3",
+    "jest-sonar-reporter": "2.0.0",
     "raf": "3.4.1",
     "redux-mock-store": "1.5.4",
-    "sinon": "9.0.0",
+    "sinon": "9.0.2",
     ...
   }
 ```
@@ -700,6 +715,20 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 global.fetch = require('jest-fetch-mock');
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn()
+  }))
+});
 ```
 
 test/__mocks/fileTransformer.js
@@ -733,7 +762,7 @@ package.json
   }
 ```
 
-### Install Ant Design
+### Install Ant Design (3.x version)
 
 package.json
 ```json
@@ -753,32 +782,33 @@ webpack/base.config.ts
     module: {
       rules: [
         ...
-+        {
-+          test: /\.less$/,
-+          use: [
-+            loaders.getCacheLoader(path.resolve(settings.cacheDir, 'css')),
-+            loaders.getThreadLoader('css'),
-+            'style-loader',
-+            MiniCssExtractPlugin.loader,
-+            'css-loader',
-+            {
-+              loader: 'less-loader',
-+              options: {
-+                javascriptEnabled: true
-+              }
-+            }
-+          ]
-+        },
+        {
+          test: /\.less$/,
+          use: [
+            loaders.getCacheLoader(path.resolve(settings.cacheDir, 'css')),
+            loaders.getThreadLoader('css'),
+            'style-loader',
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'less-loader',
+              options: {
+                lessOptions: {
+                  javascriptEnabled: true
+                }
+              }
+            }
+          ]
+        },
       ...
       ]
     }
 ```
 
- .babelrc
+.babelrc
 ```json
    "plugins": [
-     "@babel/plugin-proposal-class-properties",
-     "@babel/plugin-syntax-dynamic-import",
+     ...
 +    [
 +      "import",
 +      {
@@ -792,7 +822,7 @@ webpack/base.config.ts
 
 * language customization
 
-`app/src/index.ts`
+`app/src/index.tsx`
 ```js
 ...
 + import { ConfigProvider } from 'antd';
@@ -818,6 +848,82 @@ webpack/base.config.ts
   );
 ```
 
+### Install Ant Design (4.x version)
+
+package.json
+```json
+  "devDependencies": {
+    ...
+    "@ant-design/compatible": "1.0.4",
+    "antd": "4.5.1",
+    "antd-dayjs-webpack-plugin": "1.0.1",
+    "babel-plugin-import": "1.13.0",
+    "dayjs": "1.8.31",
+    "less": "3.12.2",
+    "less-loader": "6.2.0",
+    ...
+  }
+```
+
+webpack/base.config.ts
+```js
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+...
+    module: {
+      rules: [
+        ...
+        {
+          test: /\.less$/,
+          use: [
+            loaders.getCacheLoader(path.resolve(settings.cacheDir, 'css')),
+            loaders.getThreadLoader('css'),
+            'style-loader',
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'less-loader',
+              options: {
+                lessOptions: {
+                  javascriptEnabled: true
+                }
+              }
+            }
+          ]
+        },
+      ...
+      ]
+    },
+    ...
+     plugins: [
+       new AntdDayjsWebpackPlugin()
+     ]
+```
+
+.babelrc
+`same as 3.x version`
+
+* language customization
+
+`app/src/index.tsx`
+```js
+...
++ import { ConfigProvider } from 'antd';
++ import ruRu from 'antd/es/locale/ru_RU';
++ import 'dayjs/locale/ru';
++ import 'antd/es/grid/style/css';
+...
+  ReactDOM.render(
+    <Provider store={store}>
++      <ConfigProvider locale={ruRu}>
+        <ConnectedRouter history={history}>
+          <Component/>
+        </ConnectedRouter>
++      </ConfigProvider>
+    </Provider>,
+    document.getElementById('app')
+  );
+```
+
 ### Typescript migration
 
 * Install Typescript
@@ -829,7 +935,7 @@ package.json
 -   "prop-types": "^15.7.2",
   "devDependencies": {
     ...
-+   "@babel/preset-typescript": "7.8.3",
++   "@babel/preset-typescript": "7.10.4",
 +   "@types/enzyme": "3.10.5",
 +   "@types/enzyme-adapter-react-16": "1.0.6",
 +   "@types/fetch-mock": "7.3.2",
@@ -853,11 +959,11 @@ package.json
     ...
 +   "jest-sonar-reporter": "2.0.0",
 +   "source-map-loader": "0.2.4",
-+   "typescript": "3.8.3",
++   "typescript": "3.9.7",
     ...
   }
   ...
-  "main": "app/src/index.ts",
+  "main": "app/src/index.tsx",
   "scripts": {
     "webpack:start": "webpack-dev-server --progress --colors --config ./webpack/dev.config.ts",
     "webpack:build": "webpack --config ./webpack/prod.config.ts",
@@ -1039,8 +1145,8 @@ package.json
 ```json
   "devDependencies": {
     ...
-    "@babel/plugin-transform-runtime": "7.8.3",
-    "@babel/runtime": "7.8.4",
+    "@babel/plugin-transform-runtime": "7.11.0",
+    "@babel/runtime": "7.11.0",
     ...
   }
 ```
@@ -1056,4 +1162,45 @@ package.json
 +       "regenerator": true
 +     }
 +   ],
+```
+
+### Immutability
+
+package.json
+```json
+  "devDependencies": {
+    ...
+    "immer": "7.0.7",
+    ...
+  }
+```
+
+* IE11 adaptation
+
+`app/src/index.tsx`
+```js
+import { enableES5 } from 'immer';
+import { isIE } from '~utils/CommonUtils';
+
+if (isIE()) {
+  enableES5();
+}
+```
+
+### IE11 polymorphism (vendors too)
+
+package.json
+```json
+  "devDependencies": {
+    ...
+    "react-app-polyfill": "1.0.6",
+    ...
+  }
+```
+
+`app/src/index.tsx`
+```js
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+
 ```
