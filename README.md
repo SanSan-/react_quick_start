@@ -5,6 +5,10 @@
 This is quick start bundle for quick start development without noisy initialization of project (it may take several days) 
 
 ### Bundle include:
+
+<details>
+<summary>Features</summary>
+
 * main
 - bundler:: webpack 4
 - view:: react 16.13
@@ -22,10 +26,13 @@ This is quick start bundle for quick start development without noisy initializat
 - components:: antd 4.5
 - date:: dayjs 1.8
 - style:: less 3, sass
+</details>
 
 ### Install Webpack
 
-package.json
+<details>
+<summary>package.json</summary>
+
 ```json
   "scripts": {
     "webpack:start": "webpack-dev-server --progress --colors --config ./webpack/dev.config.ts",
@@ -48,8 +55,10 @@ package.json
     ...
   }
 ```
+</details>
 
-* Optimization: increase speed of build
+<details>
+<summary>* Optimization: increase speed of build</summary>
 
 webpack/settings.ts
 ```js
@@ -94,8 +103,10 @@ webpack/base.config.ts
       ]
     }
 ```
+</details>
 
-* Optimization: split chunks on vendor (node_modules) and application-only
+<details>
+<summary>* Optimization: split chunks on vendor (node_modules) and application-only</summary>
 
 webpack/base.config.ts
 ```js
@@ -113,8 +124,10 @@ webpack/base.config.ts
       }
     }
 ```
+</details>
 
-* Optimization: auto paste scripts into html and load favicon
+<details>
+<summary>* Optimization: auto paste scripts into html and load favicon</summary>
 
 webpack/settings.ts
 ```js
@@ -144,8 +157,10 @@ index.html
     <% } %>
 </body>
 ```
+</details>
 
-* Optimization: minimization and uglyfying (ecma 5 is for better compatibility with IE 11)
+<details>
+<summary>* Optimization: minimization and uglyfying (ecma 5 is for better compatibility with IE 11)</summary>
 
 webpack/prod.config.ts
 ```js
@@ -166,8 +181,10 @@ webpack/prod.config.ts
       ]
     }
 ```
+</details>
 
-* Optimization: version control
+<details>
+<summary>* Optimization: version control</summary>
 
 webpack/prod.config.ts
 ```js
@@ -183,8 +200,12 @@ const versionComment = '/* Version ' + gitRevisionPlugin.version() + '; branch: 
       })
     ]
 ```
+</details>
 
 ### Install style
+
+<details>
+<summary>Changes...</summary>
 
 package.json
 ```json
@@ -286,10 +307,13 @@ index.html
     <% } %>
 </head>
 ```
+</details>
 
 ### Install React
 
-package.json
+<details>
+<summary>package.json</summary>
+
 ```json
   "dependencies": {
     ...
@@ -305,10 +329,13 @@ package.json
        ...
      }
 ```
+</details>
 
 ### Install Redux
 
-package.json
+<details>
+<summary>package.json</summary>
+
 ```json
   "dependencies": {
     ...
@@ -324,10 +351,13 @@ package.json
     ...
   }
 ```
+</details>
 
 ### Install Router
 
-package.json
+<details>
+<summary>package.json</summary>
+
 ```json
   "dependencies": {
     ...
@@ -344,10 +374,12 @@ package.json
     ...
   }
 ```
+</details>
 
 `[WARNING] history@^5 is broken. Don't use that version before all issues will resolved`
 
-* Routing with store history
+<details>
+<summary>* Routing with store history</summary>
 
 stores/configureStore.ts
 ```js
@@ -388,8 +420,10 @@ index.ts
     );
   }
 ```
+</details>
 
-* Parse query from uri
+<details>
+<summary>* Parse query from uri</summary>
 
 package.json
 ```json
@@ -422,9 +456,12 @@ export default connect((state) => ({
 ** We need version 5 because newest versions crash vendor bundle in IE
 
 ** If you sure that you code could not run under IE or other older browser use `query-string@6` or newer
- 
+</details>
 
 ### Install Babel
+
+<details>
+<summary>Changes...</summary>
 
 package.json
 ```json
@@ -486,8 +523,10 @@ webpack/base.config.ts
           ]
         }
 ```
+</details>
 
-* Babel produce some node_modules 
+<details>
+<summary>* Babel polymorph specific node_modules</summary>
 
 webpack/prod.config.ts
 ```js
@@ -511,8 +550,10 @@ webpack/prod.config.ts
           ]
         }
 ```
+</details>
 
-* Component lazy initialization
+<details>
+<summary>* Component lazy initialization</summary>
 
 ```js
 import React, { Component, Suspense } from 'react';
@@ -532,8 +573,12 @@ class App extends Component {
 ``` 
 
 ** `acorn` and `acorn-dynamic-import` were used for work `@babel/plugin-syntax-dynamic-import` cause `webpack@^4.28` throw exception
+</details>
 
 ### Install Eslint
+
+<details>
+<summary>Changes...</summary>
 
 package.json
 ```json
@@ -601,14 +646,24 @@ webpack/base.config.ts
       ]
     }
 ```
+</details>
 
-* Idea Configuration
+<details>
+<summary>* Idea configuration</summary>
+
 <img src="https://api.monosnap.com/file/download?id=fpA54QvR9ShYiVTnRDyckI8CE3x8x0">
+</details>
 
-* How to use
+<details>
+<summary>* How to use</summary>
+
 <img src="https://api.monosnap.com/file/download?id=Z3FxWx70Me2Z8a4o0USf13jXRDDqdu">
+</details>
 
 ### Testing
+
+<details>
+<summary>Changes...</summary>
 
 package.json
 ```json
@@ -741,13 +796,19 @@ module.exports = {
   }
 };
 ```
+</details>
 
-* Idea configuration 
+<details>
+<summary>* Idea configuration</summary>
+
 <img src="https://api.monosnap.com/file/download?id=swpRsy3RpL0ItSaqcU0oZQdB97qbtr">
+</details>
 
 ### Cleaning
 
-package.json
+<details>
+<summary>package.json</summary>
+
 ```json
   "scripts": {
     ...,
@@ -761,8 +822,12 @@ package.json
     ...
   }
 ```
+</details>
 
 ### Install Ant Design (3.x version)
+
+<details>
+<summary>Changes...</summary>
 
 package.json
 ```json
@@ -819,8 +884,10 @@ webpack/base.config.ts
    ]
  }
 ```
+</details>
 
-* language customization
+<details>
+<summary>* language customization</summary>
 
 `app/src/index.tsx`
 ```js
@@ -847,8 +914,12 @@ webpack/base.config.ts
     document.getElementById('app')
   );
 ```
+</details>
 
 ### Install Ant Design (4.x version)
+
+<details>
+<summary>Changes...</summary>
 
 package.json
 ```json
@@ -901,8 +972,10 @@ const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 
 .babelrc
 `same as 3.x version`
+</details>
 
-* language customization
+<details>
+<summary>* language customization</summary>
 
 `app/src/index.tsx`
 ```js
@@ -923,10 +996,12 @@ const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
     document.getElementById('app')
   );
 ```
+</details>
 
 ### Typescript migration
 
-* Install Typescript
+<details>
+<summary>* Install Typescript</summary>
 
 package.json
 ```json
@@ -1127,8 +1202,10 @@ webpack/base.config.ts
       extensions: ['.ts', '.tsx', '.js']
     },
 ```
+</details>
 
-* Sonar settings (Maven 3 `pom.xml`)
+<details>
+<summary>* Sonar settings (Maven 3 `pom.xml`)</summary>
 
 ```xml
   <sonar.sources>app</sonar.sources>
@@ -1138,8 +1215,12 @@ webpack/base.config.ts
 + <sonar.typescript.lcov.reportPath>coverage/lcov.info</sonar.typescript.lcov.reportPath>
 + <sonar.testExecutionReportPaths>test-report.xml</sonar.testExecutionReportPaths>
 ```
+</details>
 
 ### async/await Install
+
+<details>
+<summary>Changes...</summary>
 
 package.json
 ```json
@@ -1163,10 +1244,13 @@ package.json
 +     }
 +   ],
 ```
+</details>
 
 ### Immutability
 
-package.json
+<details>
+<summary>package.json</summary>
+
 ```json
   "devDependencies": {
     ...
@@ -1174,8 +1258,10 @@ package.json
     ...
   }
 ```
+</details>
 
-* IE11 adaptation
+<details>
+<summary>* IE11 adaptation</summary>
 
 `app/src/index.tsx`
 ```js
@@ -1186,8 +1272,12 @@ if (isIE()) {
   enableES5();
 }
 ```
+</details>
 
 ### IE11 polymorphism (vendors too)
+
+<details>
+<summary>Changes...</summary>
 
 package.json
 ```json
@@ -1198,9 +1288,10 @@ package.json
   }
 ```
 
-`app/src/index.tsx`
+app/src/index.tsx
 ```js
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 
 ```
+</details>
