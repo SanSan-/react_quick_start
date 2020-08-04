@@ -1,4 +1,4 @@
-import Thing from '~dictionaries/Thing';
+import Thing from './classes/Thing';
 import { Dayjs } from 'dayjs';
 import { LabeledValue } from 'antd/lib/select';
 

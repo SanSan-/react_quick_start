@@ -929,7 +929,7 @@ package.json
     "antd": "4.5.1",
     "antd-dayjs-webpack-plugin": "1.0.1",
     "babel-plugin-import": "1.13.0",
-    "dayjs": "1.8.31",
+    "dayjs": "1.8.32",
     "less": "3.12.2",
     "less-loader": "6.2.0",
     ...

@@ -1,4 +1,4 @@
-import Thing from '~dictionaries/Thing';
+import Thing from '~types/classes/Thing';
 import { EMPTY_STRING } from '~const/common';
 import { RosterFilterType, RosterType, ValidatorType } from '~types/state';
 

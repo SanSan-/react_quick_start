@@ -1,4 +1,4 @@
-import Header from '~dictionaries/Header';
+import Header from '~types/classes/Header';
 
 export const rowHeaders: Array<Header> = [
   new Header('#', 'rowNum', 50),

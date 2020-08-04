@@ -1,5 +1,4 @@
-import * as Immutable from 'immutable';
-import Type from '../enums/Types';
+import Type from '~enums/Types';
 import { EMPTY_STRING } from '~const/common';
 
 export const isEmpty = (value: unknown): boolean =>
@@ -9,8 +8,6 @@ export const isEmptyObject = <T> (value: T): boolean => isEmpty(value) ||
   (value.constructor === Object && Object.keys(value).length === 0);
 
 export const isEmptyArray = <T> (value: T): boolean => !(value && value instanceof Array && value.length > 0);
-
-export const isMapOrList = <T> (value: T): boolean => value instanceof Immutable.Map || value instanceof Immutable.List;
 
 export const isIE = (): boolean => false || !!document.documentMode;
 

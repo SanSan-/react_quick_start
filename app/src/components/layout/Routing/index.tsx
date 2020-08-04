@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Layout from '../forms/Layout';
-import { routes } from '~dictionaries/state';
+import Layout from '~forms/Layout';
+import routes from '~dictionaries/routes';
 
 const Routing = (): ReactElement =>
   <Switch>

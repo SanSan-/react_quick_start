@@ -13,8 +13,8 @@ import 'dayjs/locale/ru';
 import 'antd/es/grid/style/css';
 
 import configureStore, { history } from './stores/configureStore';
-import App from './components/App';
-import { APP_ID } from '~const/common';
+import App from '~components/layout/App';
+import { APP_ID } from '~const/settings';
 
 import '../styles/index.scss';
 

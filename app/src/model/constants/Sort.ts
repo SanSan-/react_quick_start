@@ -1,4 +1,4 @@
-import SortType from '~src/enums/SortType';
+import SortType from '~enums/SortType';
 
 export const Sort = {
   ascend: SortType.ASC,

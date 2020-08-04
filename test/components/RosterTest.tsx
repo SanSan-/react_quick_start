@@ -1,5 +1,5 @@
 import React from 'react';
-import Roster from '~components/forms/Roster';
+import Roster from '~forms/Roster';
 import { Button, Input, message } from 'antd';
 import { mount2dom } from '../__mocks/utils';
 import dayjs from 'dayjs';

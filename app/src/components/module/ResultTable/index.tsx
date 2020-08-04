@@ -1,12 +1,12 @@
 import { Table } from 'antd';
 import React, { ReactElement, useState } from 'react';
 import { isEmptyArray } from '~utils/CommonUtils';
-import Header from '~dictionaries/Header';
-import useWindowResize from '~src/hooks/UseWindowResize';
-import ResizableTitle from '~components/module/ResultTable/ResizableTitle';
+import Header from '~types/classes/Header';
+import useWindowResize from '~hooks/UseWindowResize';
+import ResizableTitle from '../ResizableTitle';
 import { EMPTY_FUNC } from '~const/common';
-import { Sort } from '~dictionaries/Sort';
-import SortType from '~src/enums/SortType';
+import SortType from '~enums/SortType';
+import { Sort } from '~const/Sort';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { SortOrder } from 'antd/lib/table/interface';
 

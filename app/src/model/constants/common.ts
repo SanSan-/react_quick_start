@@ -1,4 +1,3 @@
-export const APP_ID = 'app';
 export const EMPTY_STRING = '';
 
 export const FORM_ELEMENT_SIZE = 'small';

@@ -3,18 +3,17 @@ import { connect } from 'react-redux';
 import dayjs, { Dayjs } from 'dayjs';
 import { Button, Checkbox, Col, Collapse, DatePicker, Form, Input, message, Radio, Row, Select } from 'antd';
 import ResultTable from '../../module/ResultTable';
-import { rowHeaders } from '~const/dictionary/headers';
+import { rowHeaders } from '~dictionaries/headers';
 import {
   defaultFilter,
   defaultValidators,
   statusFilter,
   thingsFilter,
   typesFilter
-} from '~const/dictionary/rosterFilter';
+} from '~dictionaries/rosterFilter';
 import { filterInnerObject, isEmpty, isEmptyObject } from '~utils/CommonUtils';
 import { numValidator, textValidator } from '~utils/ValidationUtils';
-import { EMPTY_FUNC, EMPTY_STRING, FORM_ELEMENT_SIZE } from '~const/common';
-import { getRows } from '~src/mocks/mockTable';
+import { DATE_FORMAT, EMPTY_FUNC, EMPTY_STRING, FORM_ELEMENT_SIZE } from '~const/common';
 import { Dispatch } from 'redux';
 import { RosterFilterType, ValidatorType, ValidStatusType } from '~types/state';
 import produce from 'immer';
@@ -221,7 +220,13 @@ const Roster: React.FC<Props> = (props: Props): Array<ReactElement> => {
   </div>;
   const renderTable = () => {
     let i = 0;
-    const tableData = getRows.map((item) => {
+    const tableData = [
+      {
+        rowName: 'Alex Franz',
+        rowAccount: '12312423543654654',
+        rowDate: dayjs().format(DATE_FORMAT)
+      }
+    ].map((item) => {
       i++;
       return { rowNum: i, ...item };
     });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ConnectedComponent, DispatchProp, GetProps, Shared } from 'react-redux';
 
-export class Route<P> {
+export default class Route<P> {
   readonly path: string;
   readonly component: ConnectedComponent<React.FunctionComponent<P>,
     Omit<GetProps<React.FunctionComponent<P>>,

@@ -1,4 +1,5 @@
 const mockInfo = require('./mock/mockInfo');
+const mockTable = require('./mock/mockTable');
 
 module.exports = (app) => {
 
@@ -33,4 +34,5 @@ module.exports = (app) => {
   };
 
   createGetRoute('/api/get/info', mockInfo.getInfo);
+  createPageablePostRoute('/api/get/table', mockTable.getRows, 'rows');
 };
