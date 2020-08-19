@@ -1,0 +1,12 @@
+export const JSON_PARSING_ERROR = 'JSON parsing error: ';
+export const UNKNOWN_COMMUNICATION_PROBLEM = 'Unknown communication problem';
+export const UNKNOWN_RESULT = 'Unknown result: ';
+export const UNEXPECTED_NOT_JSON_RESULT = 'Server returned unexpected result (not a JSON)';
+export const UNEXPECTED_RESPONSE_STATUS = 'Server returned unexpected response status code: ';
+export const INCORRECT_SERVER_RESULT = 'Incorrect server result: ';
+export const ENDPOINT_NOT_AVAILABLE = 'Endpoint not available';
+export const ACCESS_DENIED = 'Access denied';
+export const LOGGED_OUT = 'Logged out';
+export const PASSWORD_EXPIRED = 'Password expired! Need change';
+export const PASSWORD_CHANGED_SUCCESSFUL = 'Password changed successful';
+export const SEARCH_ERROR = 'Search is impossible! Some fields has errors!';

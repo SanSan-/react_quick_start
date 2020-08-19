@@ -1,12 +1,9 @@
-import { LOCATION_CHANGE } from 'connected-react-router';
+import { combineReducers } from 'redux';
 
-const initialState: { module: Record<string, unknown> } = {
-  module: null
-};
+import breadcrumbs from './breadcrumbs';
+import rosters from './rosters';
 
-export default (state = initialState, action: { type: string }): Record<string, unknown> => {
-  if (action.type === LOCATION_CHANGE) {
-    return state;
-  }
-  return state;
-};
+export default combineReducers({
+  breadcrumbs,
+  rosters
+});

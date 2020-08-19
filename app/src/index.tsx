@@ -13,17 +13,10 @@ import 'dayjs/locale/ru';
 import 'antd/es/grid/style/css';
 
 import configureStore, { history } from './stores/configureStore';
-import App from '~components/layout/App';
+import App from '~components/module/App';
 import { APP_ID } from '~const/settings';
 
 import '../styles/index.scss';
-
-import { enableES5 } from 'immer';
-import { isIE } from '~utils/CommonUtils';
-
-if (isIE()) {
-  enableES5();
-}
 
 const render = (Component: React.FunctionComponent, store: Store): void => {
   ReactDOM.render(

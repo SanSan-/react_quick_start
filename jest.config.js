@@ -59,7 +59,11 @@ module.exports = {
 
   // A set of global variables that need to be available in all test environments
   globals: {
-    __DEBUG__: 'true'
+    __DEBUG__: 'true',
+    __TEST__: 'true',
+    'process.env.NODE_ENV': 'development',
+    SERVER_MODULE_NAME: 'new-begin',
+    SERVER_PATH: '../api'
   },
 
   // An array of directory names to be searched recursively up from the requiring module's location

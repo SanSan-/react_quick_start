@@ -5,7 +5,6 @@ const { merge } = require('webpack-merge');
 
 /* VERSION (from git tags), BRANCH and COMMIT to files header */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const baseConfig = require('./base.config');
 const settings: { resourcePrefix: string, htmlPlugin: Record<string, unknown> } = require('./settings');
@@ -21,15 +20,14 @@ const devConfig = (): Configuration => merge([
         __DEBUG__: JSON.stringify(true),
         __TEST__: JSON.stringify(false),
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        SERVER_MODULE_NAME: JSON.stringify('new-begining'),
-        HTTP_BRIDGE_SERVER_PATH: JSON.stringify('../httpbridge-server')
+        SERVER_MODULE_NAME: JSON.stringify('new-begin'),
+        SERVER_PATH: JSON.stringify('../api')
       }),
       new MiniCssExtractPlugin({
         filename: `./css/[name].[contenthash]${settings.resourcePrefix}.css`,
         chunkFilename: `./css/[id]${settings.resourcePrefix}.css`,
         allChunks: true
-      }),
-      new HtmlWebpackPlugin(settings.htmlPlugin)
+      })
     ],
     optimization: {
       splitChunks: {
@@ -54,7 +52,7 @@ const devConfig = (): Configuration => merge([
       open: false,
       port: 9090,
       proxy: {
-        '/server': {
+        '/api': {
           target: 'http://localhost:3003',
           secure: false
         }

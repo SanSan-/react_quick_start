@@ -1,11 +1,11 @@
 import { EMPTY_FUNC } from '~const/common';
 import { Store } from 'redux';
-import { GeneralStateType } from '~types/store';
+import { GeneralState } from '~types/store';
 
-export const mockOptions = (state: GeneralStateType): { context: { store: Store<GeneralStateType> } } => ({
+export const mockOptions = (state: GeneralState): { context: { store: Store<GeneralState> } } => ({
   context: {
     store: {
-      getState: (): GeneralStateType => (state),
+      getState: (): GeneralState => (state),
       dispatch: EMPTY_FUNC,
       subscribe: EMPTY_FUNC
     }

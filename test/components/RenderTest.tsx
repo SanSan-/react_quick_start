@@ -1,17 +1,17 @@
 import React from 'react';
 import { spy } from 'sinon';
 
-import App from '~components/layout/App';
+import App from '~components/module/App';
 
 import { mockOptions } from '~test/__mocks/state';
 import { mount2dom } from '~test/__mocks/utils';
-import { GeneralStateType } from '~types/store';
+import { GeneralState } from '~types/store';
 
 describe('Render component pages test', () => {
 
   test('App component test: should render', () => {
     const dispatch = spy();
-    const mockState: GeneralStateType = {
+    const mockState: GeneralState = {
       app: {},
       router: {
         location: {

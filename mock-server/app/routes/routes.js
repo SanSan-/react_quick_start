@@ -1,5 +1,7 @@
 const mockInfo = require('./mock/mockInfo');
 const mockTable = require('./mock/mockTable');
+const mockAuth = require('./mock/mockAuth');
+const mockToken = require('./mock/mockToken');
 
 module.exports = (app) => {
 
@@ -33,6 +35,14 @@ module.exports = (app) => {
     return app.get(link, (req, res) => res.send(response));
   };
 
-  createGetRoute('/api/get/info', mockInfo.getInfo);
-  createPageablePostRoute('/api/get/table', mockTable.getRows, 'rows');
+  app.get('/api/csrfToken/get', (req, res) => {
+    if (req.query['moduleId'] === 'new-begin') {
+      res.send(mockToken.getCsrfToken);
+    }
+  });
+
+  createPostRoute('/api/login', mockAuth.getSuccessLogin);
+  createPostRoute('/api/logout', mockAuth.getSuccessLogout);
+  createGetRoute('/api/invoke/new-begin/info/get', mockInfo.getInfo);
+  createPageablePostRoute('/api/invoke/new-begin/rosters/find', mockTable.getRows, 'rows');
 };

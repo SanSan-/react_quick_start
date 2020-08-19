@@ -5,10 +5,9 @@ import Header from '~types/classes/Header';
 import useWindowResize from '~hooks/UseWindowResize';
 import ResizableTitle from '../ResizableTitle';
 import { EMPTY_FUNC } from '~const/common';
-import SortType from '~enums/SortType';
+import { SortType } from '~enums/SortType';
 import { Sort } from '~const/Sort';
-import { PaginationConfig } from 'antd/lib/pagination';
-import { SortOrder } from 'antd/lib/table/interface';
+import { Key, SortOrder, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 
 interface Props {
   data?: Array<Record<string, unknown>>;
@@ -18,8 +17,8 @@ interface Props {
   page?: number;
   pageSize?: number;
   pageSizeOptions?: Array<string>;
-  callback?: (currentPage: number, pageSize: number, newSortKey: string, newSortType: SortType) => void;
-  rowSelection?: Record<string, unknown>;
+  callback?: (currentPage: number, pageSize: number, newSortKey: string, newSortType: string) => void;
+  rowSelection?: TableRowSelection<unknown>;
   showPagination?: boolean;
   style?: React.CSSProperties;
 }
@@ -67,12 +66,12 @@ const ResultTable: React.FC<Props> = ({
     })
   }));
   const handleChange = (
-    { current, pageSize: newPageSize }: PaginationConfig,
-    _filters: Partial<Record<keyof string, string[]>>,
+    { current, pageSize: newPageSize }: TablePaginationConfig,
+    _filters: Record<string, Key[] | null>,
     { column, order }: { column: Header, order: SortOrder }
   ): void => {
     setSortedInfo({ order: order || null, field: column ? column.sortName : null });
-    callback(current, newPageSize, column ? column.sortName : null, Sort[order] || SortType.NONE);
+    callback(current, newPageSize, column ? column.sortName : null, Sort[order] || SortType.NONE as string);
   };
   return isEmptyArray(dataSource) ? null : (
     <Table columns={columns} dataSource={dataSource} defaultExpandAllRows={defaultExpandAllRows}

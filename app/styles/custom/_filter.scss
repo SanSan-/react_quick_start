@@ -1,0 +1,32 @@
+.thing-btn {
+  min-width: 81px;
+  padding: 0;
+
+  &:hover {
+    color: $mainDescriptionTextColor;
+    background: $activeStatusBackground;
+  }
+
+  &-active {
+    padding: 0 8px;
+    color: $defaultBackground;
+    background: $greenfieldBackground;
+  }
+}
+
+.things-filter-change-col {
+  min-width: 87px;
+}
+
+.date-filter-label-clear {
+  float: right;
+}
+
+.date-input {
+  width: 100%;
+}
+
+.search-collapse, .search-panel, .search-row {
+  min-width: 1300px;
+  width: 100%;
+}

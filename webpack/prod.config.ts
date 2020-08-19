@@ -6,7 +6,6 @@ const { merge } = require('webpack-merge');
 /* VERSION (from git tags), BRANCH and COMMIT to files header */
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WrapperPlugin = require('wrapper-webpack-plugin');
 const TerserJsPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -31,13 +30,12 @@ const prodConfig = (): Configuration => merge([
         __TEST__: JSON.stringify(false),
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         SERVER_MODULE_NAME: JSON.stringify('new-begining'),
-        HTTP_BRIDGE_SERVER_PATH: JSON.stringify('../httpbridge-server')
+        SERVER_PATH: JSON.stringify('../api')
       }),
       new MiniCssExtractPlugin({
         filename: `./css/[name].bundle${settings.resourcePrefix}.css`,
         allChunks: true
       }),
-      new HtmlWebpackPlugin(settings.htmlPlugin),
       new webpack.LoaderOptionsPlugin({
         minimize: true
       }),
