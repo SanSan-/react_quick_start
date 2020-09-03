@@ -177,10 +177,7 @@
         "vars": "all"
       }
     ],
-    "no-use-before-define": [
-      2,
-      "nofunc"
-    ],
+    "no-use-before-define": 0,
     "no-var": 2,
     "no-void": 2,
     "no-with": 2,
@@ -277,6 +274,10 @@
     "@typescript-eslint/unbound-method": 0,
     "@typescript-eslint/no-this-alias": 0,
     "@typescript-eslint/no-floating-promises": 0,
+    "@typescript-eslint/no-use-before-define": [
+      2,
+      "nofunc"
+    ],
     "react-hooks/rules-of-hooks": 2,
     "react-hooks/exhaustive-deps": 0
   }

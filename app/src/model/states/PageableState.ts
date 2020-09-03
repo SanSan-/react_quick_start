@@ -6,7 +6,7 @@ export const pageableState: PageableState = {
   totalRecords: 0,
   pageSizeOptions: PAGE_SIZE_OPTIONS,
   serverFilter: {
-    page: 0,
+    pageNum: 0,
     pageSize: DEFAULT_PAGE_SIZE
   }
 };

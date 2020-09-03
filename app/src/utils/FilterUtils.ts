@@ -133,8 +133,8 @@ export const createHandleSubmit = <T extends RosterFilter> (
 
 export const filterObject = <T extends RosterFilter, K extends keyof T, E extends T[K]> (
   obj: T,
-  matcher: (obj: T, key: string) => boolean,
-  mapper: (obj: T, key: string) => E
+  matcher: (object: T, key: string) => boolean,
+  mapper: (object: T, key: string) => E
 ): T => Object.keys(obj).reduce((acc, key) => (
     matcher(obj, key) ? acc : {
       ...acc,
