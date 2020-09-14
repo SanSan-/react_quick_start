@@ -5,10 +5,12 @@ import { createHashHistory } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from '../reducers';
 import { GeneralState } from '~types/store';
+import handleErrors from '~src/middlewares/handleErrors';
 
 export const history = createHashHistory();
 
 const middleware = [
+  handleErrors,
   thunkMiddleware,
   routerMiddleware(history)
 ];
