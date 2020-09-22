@@ -18,9 +18,9 @@ import { EMPTY_STRING, FORM_ELEMENT_SIZE } from '~const/common';
 import { SelectValue } from 'antd/lib/select';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { RosterSearchHeader } from '~enums/Forms';
-import DateFilter from '~components/filter/DateFilter';
-import renderSelectFilter from '~components/filter/SelectFilter';
-import renderThingsFilter from '~components/filter/ThingsFilter';
+import DateFilter from '~components/filters/DateFilter';
+import renderSelectFilter from '~components/filters/SelectFilter';
+import renderThingsFilter from '~components/filters/ThingsFilter';
 import { numValidator, textValidator } from '~utils/ValidationUtils';
 
 const Panel = Collapse.Panel;

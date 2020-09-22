@@ -1,7 +1,8 @@
+const mockToken = require('./mock/mockToken');
+const mockAuth = require('./mock/mockAuth');
+const mockUserInfo = require('./mock/mockUserInfo');
 const mockInfo = require('./mock/mockInfo');
 const mockTable = require('./mock/mockTable');
-const mockAuth = require('./mock/mockAuth');
-const mockToken = require('./mock/mockToken');
 
 module.exports = (app) => {
 
@@ -43,6 +44,8 @@ module.exports = (app) => {
 
   createPostRoute('/api/login', mockAuth.getSuccessLogin);
   createPostRoute('/api/logout', mockAuth.getSuccessLogout);
+  createPostRoute('/api/invoke/new-begin/user/get', mockUserInfo.getUserInfo);
+  createPostRoute('/api/invoke/new-begin/user/rights/get', mockUserInfo.getUserRights);
   createGetRoute('/api/invoke/new-begin/info/get', mockInfo.getInfo);
   createPageablePostRoute('/api/invoke/new-begin/rosters/find', mockTable.getRows, 'rows');
 };

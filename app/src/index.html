@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<div id="app">Загрузка приложения...</div>
+<div id="app">Loading Application...</div>
 <% for (let path of htmlWebpackPlugin.files.js) { %>
 <script src="<%=path %>" type="text/javascript"></script>
 <% } %>

@@ -27,3 +27,16 @@ export interface PageableResponse extends AnyResponse {
 export interface RostersResponse extends PageableResponse {
   rows?: RowsDto[];
 }
+
+export type UserRightsResponse = string[] | AnyResponse;
+
+export interface UserInfoResponse extends AnyResponse {
+  version?: string;
+  login?: string;
+  roles?: string;
+  ip?: string;
+  name?: string;
+  lastName?: string;
+  middleName?: string;
+  email?: string;
+}

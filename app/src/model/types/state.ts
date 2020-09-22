@@ -80,6 +80,7 @@ export interface ModalState extends DefaultStringState {
 }
 
 export interface CommonDialog extends DefaultState {
+  type?: string;
   index?: number;
   title?: string;
   message?: ReactNode;

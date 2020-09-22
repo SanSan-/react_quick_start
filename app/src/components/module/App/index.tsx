@@ -1,10 +1,13 @@
 import React, { ReactElement } from 'react';
 
 import Routing from '../Routing';
-import MainLayout from '../MainLayout';
+import BusinessLayout from '../BusinessLayout';
+import CommonLayout from '../CommonLayout';
 
-const App: React.FC = (): ReactElement => <MainLayout>
-  <Routing/>
-</MainLayout>;
+const App: React.FC = (): ReactElement => <CommonLayout>
+  <BusinessLayout>
+    <Routing/>
+  </BusinessLayout>
+</CommonLayout>;
 
 export default App;

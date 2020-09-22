@@ -38,6 +38,9 @@ const auth = (state: AuthContext, { type, context }: AuthContextAction): AuthCon
         draft.url = context.url;
         return draft;
       }
+      case ActionType.CLEAR: {
+        return defaultState;
+      }
       default:
         return draft;
     }

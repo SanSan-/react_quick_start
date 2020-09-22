@@ -3,6 +3,7 @@ const dayjs = require('dayjs');
 const DATE_FORMAT = 'DD.MM.YYYY';
 
 const getRows = {
+  responseStatus: 'SUCCESS',
   rows: [
     {
       rowName: 'Alex Franz',

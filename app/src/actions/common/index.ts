@@ -3,9 +3,10 @@ import { DEFAULT_ALERT_OK, DEFAULT_CONFIRM_CANCEL, DEFAULT_CONFIRM_OK } from '~c
 import ActionType from '~enums/Common';
 import Spinner from '~enums/Spinner';
 import Dialog from '~enums/module/Dialog';
-import { CommonAction, CommonDialogAction, GetStateAction, ThunkResult } from '~types/action';
+import { CommonAction, GetStateAction, ThunkResult } from '~types/action';
 import { AnyResponse } from '~types/response';
 import { DefaultDispatch } from '~types/store';
+import { CommonDialog } from '~types/state';
 
 export const showSpinner = (id: string = Spinner.ID, message: string = Spinner.MESSAGE): CommonAction => ({
   type: ActionType.SPINNER_SHOW,
@@ -57,7 +58,7 @@ export const hideModals = (): CommonAction => ({
   type: ActionType.MODALS_HIDE
 });
 
-export const showDialog = (payload: CommonDialogAction): ThunkResult<Promise<CommonAction>, CommonAction> =>
+export const showDialog = (payload: CommonDialog): ThunkResult<Promise<CommonAction>, CommonAction> =>
   (dispatch) => new Promise((resolve, reject): CommonAction =>
     dispatch({
       type: ActionType.DIALOG_SHOW,
@@ -68,7 +69,7 @@ export const showDialog = (payload: CommonDialogAction): ThunkResult<Promise<Com
       }
     }));
 
-export const hideDialog = (index: number): CommonDialogAction => ({
+export const hideDialog = (index: number): CommonDialog => ({
   type: ActionType.DIALOG_HIDE,
   index
 });

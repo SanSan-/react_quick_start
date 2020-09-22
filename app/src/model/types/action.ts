@@ -67,9 +67,6 @@ export interface SessionAction extends AnyAction {
  * Common action interfaces
  */
 
-export interface CommonDialogAction extends AnyAction, CommonDialog {
-}
-
 export interface CommonAction extends AnyAction {
   id?: string;
   index?: number;

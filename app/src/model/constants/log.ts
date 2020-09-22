@@ -1,5 +1,6 @@
 export const REQUEST_PROCESSING_ERROR = 'Request processing error!';
 export const UNEXPECTED_ERROR = 'Unexpected error!';
+export const MUST_BE_USED_IN_PROVIDER = 'Must be used within Provider';
 
 export const JSON_PARSING_ERROR = 'JSON parsing error: ';
 export const UNKNOWN_COMMUNICATION_PROBLEM = 'Unknown communication problem';

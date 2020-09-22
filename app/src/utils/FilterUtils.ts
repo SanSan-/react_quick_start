@@ -2,7 +2,7 @@ import { RosterFilter, SearchBuffer, Validator, ValidStatus } from '~types/filte
 import { Dispatch, SetStateAction } from 'react';
 import produce, { original } from 'immer';
 import { SelectValue } from 'antd/lib/select';
-import { updateThingsFilter } from '~components/filter/ThingsFilter';
+import { updateThingsFilter } from '~components/filters/ThingsFilter';
 import { isEmptyObject } from '~utils/CommonUtils';
 import { message } from 'antd';
 import { SEARCH_ERROR } from '~const/log';

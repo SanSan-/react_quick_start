@@ -1,5 +1,5 @@
 enum Spinner {
-  MESSAGE = 'Пожалуйста, дождитесь загрузки...',
+  MESSAGE = 'Please, wait...',
   ID = '__app/global',
   HIDE_DELAY = 500
 }
