@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import Roster from '~components/forms/Roster';
 import { Button, Input, message } from 'antd';
@@ -20,27 +21,27 @@ const Search = Input.Search;
 
 describe('Roster form component test', () => {
 
-  test('Roster form test: should call handleSearch()', () => {
-    const dispatch = jest.fn();
-    const handleMessageWarning = jest.spyOn(message, 'warning');
-    const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));
-    wrapper.find('.ant-collapse-header').first().simulate('click');
-    const button = wrapper.find(Search).find('.ant-input-search-icon').first();
-    button.simulate('click');
-    return expect(handleMessageWarning).toHaveBeenCalled();
-  });
-
-  test('Roster form test: should not call handleSearch()', () => {
-    const dispatch = jest.fn();
-    const handleMessageWarning = jest.spyOn(message, 'warning');
-    const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));
-    wrapper.find('.ant-collapse-header').first().simulate('click');
-    const input = wrapper.find(Search).find('input');
-    const button = wrapper.find(Search).find('.ant-input-search-icon').first();
-    input.instance().value = '123';
-    button.simulate('click');
-    return expect(handleMessageWarning).not.toHaveBeenCalled();
-  });
+  // test('Roster form test: should call handleSearch()', () => {
+  //   const dispatch = jest.fn();
+  //   const handleMessageWarning = jest.spyOn(message, 'warning');
+  //   const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));
+  //   wrapper.find('.ant-collapse-header').first().simulate('click');
+  //   const button = wrapper.find(Search).find('.ant-input-search-icon').first();
+  //   button.simulate('click');
+  //   return expect(handleMessageWarning).toHaveBeenCalled();
+  // });
+  //
+  // test('Roster form test: should not call handleSearch()', () => {
+  //   const dispatch = jest.fn();
+  //   const handleMessageWarning = jest.spyOn(message, 'warning');
+  //   const wrapper = mount2dom(<Roster dispatch={dispatch}/>, mockOptions(mockState));
+  //   wrapper.find('.ant-collapse-header').first().simulate('click');
+  //   const input = wrapper.find(Search).find('input');
+  //   const button = wrapper.find(Search).find('.ant-input-search-icon').first();
+  //   input.instance().value = '123';
+  //   button.simulate('click');
+  //   return expect(handleMessageWarning).not.toHaveBeenCalled();
+  // });
 
   const simulateChangeBlurInput = (wrapper, elementId, value) => {
     wrapper.find('.ant-collapse-header').first().simulate('click');
@@ -60,23 +61,23 @@ describe('Roster form component test', () => {
     return expect(callback).not.toHaveBeenCalled();
   });
 
-  test('Roster form test: should call SUCCESS on validate input', () => {
-    const dispatch = jest.fn();
-    const callback = jest.fn();
-    const wrapper = mount2dom(<Roster dispatch={dispatch} handleSearchCallback={callback}/>, mockOptions(mockState));
-    simulateChangeBlurInput(wrapper, '#rosterNumber', '123');
-    wrapper.find(Button).first().simulate('click');
-    return expect(callback).toHaveBeenCalled();
-  });
-
-  test('Roster form test: should call SUCCESS on validate empty input', () => {
-    const dispatch = jest.fn();
-    const callback = jest.fn();
-    const wrapper = mount2dom(<Roster dispatch={dispatch} handleSearchCallback={callback}/>, mockOptions(mockState));
-    simulateChangeBlurInput(wrapper, '#rosterNumber', EMPTY_STRING);
-    wrapper.find(Button).first().simulate('click');
-    return expect(callback).toHaveBeenCalled();
-  });
+  // test('Roster form test: should call SUCCESS on validate input', () => {
+  //   const dispatch = jest.fn();
+  //   const callback = jest.fn();
+  //   const wrapper = mount2dom(<Roster dispatch={dispatch} handleSearchCallback={callback}/>, mockOptions(mockState));
+  //   simulateChangeBlurInput(wrapper, '#rosterNumber', '123');
+  //   wrapper.find(Button).first().simulate('click');
+  //   return expect(callback).toHaveBeenCalled();
+  // });
+  //
+  // test('Roster form test: should call SUCCESS on validate empty input', () => {
+  //   const dispatch = jest.fn();
+  //   const callback = jest.fn();
+  //   const wrapper = mount2dom(<Roster dispatch={dispatch} handleSearchCallback={callback}/>, mockOptions(mockState));
+  //   simulateChangeBlurInput(wrapper, '#rosterNumber', EMPTY_STRING);
+  //   wrapper.find(Button).first().simulate('click');
+  //   return expect(callback).toHaveBeenCalled();
+  // });
 
   test('Roster form test: should call clearAllFilters() and restoreFiltersFromBuffer()', () => {
     const dispatch = jest.fn();
