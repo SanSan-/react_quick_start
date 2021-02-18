@@ -11,8 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "body-parser": "1.19.0",
-    "dayjs": "1.8.35",
+    "dayjs": "1.10.4",
     "express": "4.17.1",
-    "nodemon": "2.0.4"
+    "nodemon": "2.0.7"
   }
 }
