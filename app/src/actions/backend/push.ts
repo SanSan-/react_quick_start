@@ -45,15 +45,13 @@ export const waitNotifications = (
     ).then((pushState) => {
       pushState.mapRight((dto) => {
         dispatch({ type: ActionType.NOTIFICATIONS_FOUND, dto });
-        dispatch(waitNotifications(sessionId, dto.eTag));
+        setTimeout(() => {
+          dispatch(loadNotifications());
+        }, 0);
+        resolve();
       }).mapLeft((error) => {
-        dispatch(waitNotifications(sessionId, eTag, 10000));
         reject(error);
       });
-      setTimeout(() => {
-        dispatch(loadNotifications());
-      }, 0);
-      resolve();
     }).catch((error) => {
       dispatch(waitNotifications(sessionId, eTag, 10000));
       reject(error);
@@ -65,6 +63,7 @@ export const createSession = () =>
   async (dispatch: DefaultDispatch, getState: GetStateAction): Promise<Either<unknown, string>> => {
     const state = getState().app.backend.push;
     if (state.sessionId) {
+      dispatch(waitNotifications(notificationSessionId, EMPTY_STRING, 0));
       return right(state.sessionId);
     }
     const session = await fetchGet(Push.NEW_SESSION);
