@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { DefaultDispatch } from '~types/store';
 import { GetStateAction } from '~types/action';
-import { DefaultNumberState, DefaultStringState } from '~types/state';
+import { DefaultNumberState, DefaultState, DefaultStringState } from '~types/state';
 
 export interface ExceptionType extends DefaultStringState {
   errorType?: string;
@@ -35,4 +35,10 @@ export interface RowsDto extends DefaultStringState {
   rowName?: string;
   rowAccount?: string;
   rowDate?: string;
+}
+
+export interface ActionResponse extends DefaultState {
+  objectId?: string;
+  isSuccess?: boolean;
+  message?: string;
 }

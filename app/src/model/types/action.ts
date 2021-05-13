@@ -11,7 +11,7 @@ import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { GeneralState } from '~types/store';
 import { AuthContext } from '~types/context';
-import { Pagination, RowsDto, Spinner } from '~types/dto';
+import { ActionResponse, Pagination, RowsDto, Spinner } from '~types/dto';
 import { RosterFilter } from '~types/filters';
 
 export interface GetStateAction {
@@ -93,4 +93,13 @@ export interface RosterAction extends AnyAction {
   pagination?: Pagination;
   sortKey?: string;
   sortType?: string;
+}
+
+export interface SendActionResponseAction extends AnyAction {
+  responses?: ActionResponse[]
+}
+
+export interface SaveFileResponseAction extends SendActionResponseAction {
+  binaryData?: number[];
+  fileName?: string;
 }

@@ -4,7 +4,7 @@ import { Pagination, RowsDto } from '~types/dto';
 export interface AnyResponse {
   [key: string]: string | unknown;
 
-  responseStatus: string;
+  responseStatus?: string;
   responseId?: string;
   responseTitle?: string;
   responseMessage?: string;
@@ -39,4 +39,11 @@ export interface UserInfoResponse extends AnyResponse {
   lastName?: string;
   middleName?: string;
   email?: string;
+}
+
+export type EndpointResponse = string[] | AnyResponse;
+
+export interface ReportResponse extends AnyResponse {
+  data?: number[];
+  fileName?: string;
 }
