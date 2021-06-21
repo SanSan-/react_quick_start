@@ -119,7 +119,6 @@ module.exports = {
     new webpack.DefinePlugin({
       __DEBUG__: JSON.stringify(false),
       __TEST__: JSON.stringify(false),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       SERVER_MODULE_NAME: JSON.stringify('new-begining'),
       SERVER_PATH: JSON.stringify('../api')
     }),
