@@ -18,9 +18,6 @@ interface Props {
 const Auth: React.FC<Props> = ({ state, children, dispatch }: Props): ReactElement => {
   const authDispatch = useAuthDispatch();
   const context = useAuthContext();
-  useEffect(() => {
-    dispatch(checkAuth());
-  }, []);
   const setAuthContext = (): void => {
     if (isEmpty(context.login) || isEmpty(context.version) || isEmpty(context.roles) || isEmpty(context.ip)) {
       dispatch(getUser()).then((either) => {
@@ -38,9 +35,16 @@ const Auth: React.FC<Props> = ({ state, children, dispatch }: Props): ReactEleme
       authDispatch(loadUrl(isClient()));
     }
   };
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, []);
+  useEffect(() => {
+    if (state === LoginState.LOGGED_IN) {
+      setAuthContext();
+    }
+  }, [state]);
   switch (state) {
     case LoginState.LOGGED_IN: {
-      setAuthContext();
       return React.Children.only(children);
     }
     case LoginState.PASSWORD_EXPIRED: {
