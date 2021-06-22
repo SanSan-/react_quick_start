@@ -1,4 +1,4 @@
-# [typescript 3, webpack 4, react-16, redux 4, react-router 5, babel 7, jest 26, enzyme 3, antd 4] Quick starter
+# [typescript 4, webpack 5, react-17, redux 4, react-router 5, babel 7, jest 27, enzyme 3, antd 4] Quick starter
 
 ### Introduction
 
@@ -10,25 +10,25 @@ This is quick start bundle for quick start development without noisy initializat
 <summary>Features</summary>
 
 * main
-- bundler:: webpack 4
-- view:: react 16.13
+- bundler:: webpack 5
+- view:: react 17
 - routing:: react-router 5
 - state storing:: redux 4, redux-thunk 2.3
-- history routing:: history 4.10, connected-react-router 6.6 
-- type checking:: typescript 3.9
+- history routing:: history 4.10, connected-react-router 6.9
+- type checking:: typescript 4.3
 - js-compiler:: babel 7
-- immutable:: immer 7
+- immutable:: immer 9
 * test
-- test manager:: jest 26
-- test environments:: enzyme 3, sinon 7
-- static lint checking:: eslint 7.6
+- test manager:: jest 27
+- test environments:: enzyme 3, sinon 11
+- static lint checking:: eslint 7
 * decoration
-- components:: antd 4.5
-- date:: dayjs 1.8
-- style:: less 3, sass
+- components:: antd 4.16
+- date:: dayjs 1.10
+- style:: less 4, sass 6
 </details>
 
-### Install Webpack
+### Install Webpack@4
 
 <details>
 <summary>package.json</summary>
@@ -199,6 +199,92 @@ const versionComment = '/* Version ' + gitRevisionPlugin.version() + '; branch: 
         header: versionComment + '\r\n'
       })
     ]
+```
+</details>
+
+### Webpack@5 migration
+
+<details>
+<summary>package.json</summary>
+
+```json
+  "scripts": {
++/-  "webpack:start": "webpack serve --progress --config ./webpack/dev.config.ts",
+     "webpack:build": "webpack --config ./webpack/prod.config.ts",
++/-  "webpack:watch": "npm run webpack:build -- --progress --watch",
+  },
+  "devDependencies": {
+    ...
+-   "acorn": "7.3.1",
+    "cache-loader": "4.1.0",
+    "git-revision-webpack-plugin": "3.0.6",
++/- "html-webpack-plugin": "5.3.1",
++/- "terser-webpack-plugin": "5.1.3",
++/- "thread-loader": "3.0.4",
++/- "webpack": "5.40.0",
++/- "webpack-cli": "4.7.2",
++/- "webpack-dev-server": "3.11.2",
+-   "webpack-merge": "5.0.9",
+    "wrapper-webpack-plugin": "2.1.0"
+    ...
+  }
+```
+</details>
+
+<details>
+<summary>* Migrate from `file-loader` to Assets</summary>
+
+*.config.ts
+```json
+plugins: [
+  new webpack.DefinePlugin({
+    __DEBUG__: JSON.stringify(true),
+    __TEST__: JSON.stringify(false),
+-   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+...
+module: {
+  rules: [
+    {
+      test: /\.(png|gif|jpe?g)$/,
+-     use: ['file-loader?publicPath=./&name=img/[hash].[ext]']
++     type: 'asset/resource',
++     generator: {
++       filename: 'img/[contenthash].[ext]'
++     }
+    },
+    {
+      test: /\.(svg|woff|woff2|eot|ttf)$/,
+-     use: [`file-loader?publicPath=../&name=fonts/[hash].[ext]?${Date.now()}`]
++     type: 'asset/resource',
++     generator: {
++       filename: `fonts/[contenthash].[ext]?${Date.now()}`
++     }
+```
+</details>
+
+<details>
+<summary>* Migrate from OptimizeCssAssetsPlugin to CssMinimizerPlugin</summary>
+
+package.json
+```json
+  "devDependencies": {
+    ...
++   "css-minimizer-webpack-plugin": "3.0.1",
+-   "optimize-css-assets-webpack-plugin": "5.0.3",
+    ...
+  }
+```
+
+prod.config.ts
+```json
+- const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
++ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+...
+  optimization: {
+    minimizer: [
+      ...,
+-     new OptimizeCssAssetsPlugin({})
++     new CssMinimizerPlugin()
 ```
 </details>
 
@@ -749,13 +835,16 @@ jest.config.js
     enzyme.config.tsenzyme.config.tsSerializers: [
     'enzyme-to-json/serializer'
   ],
+  testEnvironment: "jest-environment-jsdom",
   testMatch: [
-    '**/test/**/*Test.js'
+    '**/test/**/*Test.ts',
+    '**/test/**/*Test.tsx'
   ],
   transform: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': fileTransformer.js,
     fileTransformer.js 'babel-jest'
-  }
+  },
+  
 }
 ```
 
