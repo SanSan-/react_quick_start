@@ -132,13 +132,13 @@ export interface BackendState extends DefaultState {
 }
 
 export interface CommonState extends DefaultState {
-  spinner: number;
-  spinnerMessage: string;
-  spinnerTimestamp: number;
-  spinners: Record<string, SpinnerState>;
-  background: boolean;
-  modals: ModalState[];
-  dialogs: PromiseDialog[]
+  spinner?: number;
+  spinnerMessage?: string;
+  spinnerTimestamp?: number;
+  spinners?: Record<string, SpinnerState>;
+  background?: boolean;
+  modals?: ModalState[];
+  dialogs?: PromiseDialog[]
 }
 
 export interface ModuleState extends DefaultState {

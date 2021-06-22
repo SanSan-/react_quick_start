@@ -12,7 +12,9 @@ describe('Render component pages test', () => {
   test('App component test: should render', () => {
     const dispatch = spy();
     const mockState: GeneralState = {
-      app: {},
+      app: {
+        common: {}
+      },
       router: {
         location: {
           pathname: '/',
