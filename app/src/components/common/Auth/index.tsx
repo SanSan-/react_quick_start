@@ -4,8 +4,15 @@ import { GeneralState } from '~types/store';
 import { AnyAction } from 'redux';
 import { useAuthContext, useAuthDispatch } from '~hooks/UseAuthContext';
 import { checkAuth } from '~actions/backend/session';
-import { isClient, isEmpty, isEmptyArray } from '~utils/CommonUtils';
-import { clearAuthContext, getRights, getUser, loadRights, loadUrl, loadUser } from '~actions/backend/auth';
+import { isClient, isEmpty } from '~utils/CommonUtils';
+import {
+  clearAuthContext,
+  getGeneralSettings,
+  getUser,
+  loadGeneralSettings,
+  loadUrl,
+  loadUser
+} from '~actions/backend/auth';
 import { connect } from 'react-redux';
 import LoginState from '~enums/LoginState';
 
@@ -18,17 +25,20 @@ interface Props {
 const Auth: React.FC<Props> = ({ state, children, dispatch }: Props): ReactElement => {
   const authDispatch = useAuthDispatch();
   const context = useAuthContext();
+  // eslint-disable-next-line no-console
+  console.log('[Auth]', context);
   const setAuthContext = (): void => {
-    if (isEmpty(context.login) || isEmpty(context.version) || isEmpty(context.roles) || isEmpty(context.ip)) {
-      dispatch(getUser()).then((either) => {
+    if (isEmpty(context.username)) {
+      getUser().then((either) => {
         either.mapRight((response) => {
           authDispatch(loadUser(response));
         });
       });
     }
-    if (isEmptyArray(context.rights)) {
-      dispatch(getRights()).then((either) => {
-        either.mapRight((response) => authDispatch(loadRights(response as string[])));
+    if (isEmpty(context.logoutUrl) || isEmpty(context.authUrl) || isEmpty(context.apiUrl) ||
+      isEmpty(context.engineAdminUrl)) {
+      getGeneralSettings().then((either) => {
+        either.mapRight((response) => authDispatch(loadGeneralSettings(response)));
       });
     }
     if (isEmpty(context.url)) {
@@ -36,11 +46,13 @@ const Auth: React.FC<Props> = ({ state, children, dispatch }: Props): ReactEleme
     }
   };
   useEffect(() => {
-    dispatch(checkAuth());
+    dispatch(checkAuth(context.logoutUrl));
   }, []);
   useEffect(() => {
     if (state === LoginState.LOGGED_IN) {
       setAuthContext();
+    } else {
+      authDispatch(clearAuthContext());
     }
   }, [state]);
   switch (state) {
@@ -48,7 +60,6 @@ const Auth: React.FC<Props> = ({ state, children, dispatch }: Props): ReactEleme
       return React.Children.only(children);
     }
     case LoginState.PASSWORD_EXPIRED: {
-      authDispatch(clearAuthContext());
       return <div>Change Password Form</div>;
     }
     case LoginState.UNKNOWN:
@@ -57,7 +68,6 @@ const Auth: React.FC<Props> = ({ state, children, dispatch }: Props): ReactEleme
     case LoginState.LOGGED_OUT:
     case LoginState.UNAUTHENTICATED:
     default: {
-      authDispatch(clearAuthContext());
       return <div>Login Form</div>;
     }
   }

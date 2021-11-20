@@ -16,4 +16,20 @@ const getUserRights = [
   'rosters_find'
 ];
 
-module.exports = { getUserInfo, getUserRights };
+const getPersonalSettings = {
+  username: 'Us3rNam3',
+  roles: ['application_admin'],
+  projects: ['new-project']
+};
+
+const getGeneralSettings = {
+  apiUrl: '/user',
+  authMode: 'DEV',
+  authUrl: '/login',
+  logoutUrl: '/logout',
+  version: '1.0.0-SNAPSHOT',
+  engineAdminUrl: '/admin'
+};
+
+
+module.exports = { getUserInfo, getUserRights, getPersonalSettings, getGeneralSettings };

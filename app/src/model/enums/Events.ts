@@ -7,6 +7,14 @@ export enum MouseEvents {
   MOUSEUP = 'mouseup'
 }
 
+export enum InputEvents {
+  CHANGE = 'change'
+}
+
+export enum WindowEvents {
+  RESIZE = 'resize'
+}
+
 export enum EventTypes {
   MOUSE_EVENTS = 'MouseEvents'
 }

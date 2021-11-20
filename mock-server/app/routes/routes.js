@@ -47,5 +47,9 @@ module.exports = (app) => {
   createPostRoute('/api/invoke/new-begin/user/get', mockUserInfo.getUserInfo);
   createPostRoute('/api/invoke/new-begin/user/rights/get', mockUserInfo.getUserRights);
   createGetRoute('/api/invoke/new-begin/info/get', mockInfo.getInfo);
+  createGetRoute('/api/user/auth/token', mockToken.getJwtToken);
+  createGetRoute('/api/user/auth/refresh', mockToken.getJwtToken);
+  createGetRoute('/api/settings/general', mockUserInfo.getGeneralSettings);
+  createGetRoute('/api/settings/personal', mockUserInfo.getPersonalSettings);
   createPageablePostRoute('/api/invoke/new-begin/rosters/find', mockTable.getRows, 'rows');
 };

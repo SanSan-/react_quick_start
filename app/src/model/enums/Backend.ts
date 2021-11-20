@@ -12,13 +12,7 @@ enum Backend {
 
   GET_TOKEN = '@@backend/get_token',
   GET_TOKEN_SUCCESS = '@@backend/get_token/success',
-  GET_TOKEN_ERROR = '@@backend/get_token/error',
-
-  SESSION_CREATED = '@@backend/push/session/created',
-  NOTIFICATIONS_FOUND = '@@backend/push/notifications/found',
-  NOTIFICATIONS_LOADED = '@@backend/push/notifications/loaded',
-  SUBSCRIBE = '@@backend/push/subscribe',
-  UNSUBSCRIBE = '@@backend/push/unsubscribe'
+  GET_TOKEN_ERROR = '@@backend/get_token/error'
 }
 
 export default Backend;

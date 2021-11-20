@@ -1,8 +1,9 @@
 import { RosterFilter, ServerFilter } from '~types/filters';
 import Header from '~types/classes/Header';
-import { ErrorType, ExceptionType, RowsDto } from '~types/dto';
+import { ErrorType, RowsDto } from '~types/dto';
 import { ReactNode } from 'react';
 import { Either } from '@sweet-monads/either';
+import AuthMode from '~enums/AuthMode';
 
 export interface DefaultState {
   [key: string]: unknown;
@@ -20,23 +21,11 @@ export interface DefaultNumberState {
  * BackendState interfaces
  */
 
-export interface Listener<T> {
-  (notification: T): void;
-}
-
-export interface NotificationType extends DefaultState {
-  type?: string;
-  requestId?: string;
-  data?: unknown;
-  error?: ExceptionType;
-}
-
-export type PushListener = Listener<NotificationType>;
-
 export interface Token extends DefaultState {
-  token: string;
-  validUntil: number;
-  promise?: Promise<Either<ErrorType, string>>
+  // eslint-disable-next-line camelcase
+  access_token: string;
+  // eslint-disable-next-line camelcase
+  refresh_token: string;
 }
 
 export interface AccessState extends DefaultState {
@@ -44,16 +33,10 @@ export interface AccessState extends DefaultState {
   loading?: boolean;
 }
 
-export interface PushState extends DefaultState {
-  sessionId?: string;
-  eTag?: string;
-  notifications?: Record<string, NotificationType>;
-  notificationIds?: string[];
-  listeners?: PushListener[];
-}
-
 export interface RequestState extends DefaultState {
-  tokens: Record<string, Token>;
+  authMode: AuthMode;
+  token: Token;
+  refreshPromise?: Promise<Either<ErrorType, Token>>;
 }
 
 export interface SessionState extends DefaultState {
@@ -126,7 +109,6 @@ export interface RostersState extends PageableState, SortableState {
 
 export interface BackendState extends DefaultState {
   access?: AccessState;
-  push?: PushState;
   request?: RequestState;
   session?: SessionState;
 }

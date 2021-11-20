@@ -11,7 +11,10 @@ export enum ResponseStatus {
 export enum Headers {
   CONTENT_LENGTH = 'Content-Length',
   CONTENT_TYPE = 'Content-Type',
-  ATTACHMENT_FILE = 'data:attachment/file;'
+  CONTENT_DISPOSITION = 'Content-Disposition',
+  ATTACHMENT_FILE = 'data:attachment/file;',
+  FILENAME = 'filename=',
+  BEARER = 'Bearer'
 }
 
 export enum Method {
@@ -26,9 +29,10 @@ export enum Credentials {
 
 export enum ContentType {
   HTML = 'text/html',
-  JSON = 'application/json',
+  PLAIN = 'text/plain;charset=utf-8',
+  JSON = 'application/json;charset=utf=8',
   OCTET_STREAM = 'application/octet-stream',
-  URL_ENCODED_UTF_8 = 'application/x-www-form-urlencoded; charset=utf-8'
+  URL_ENCODED_UTF_8 = 'application/x-www-form-urlencoded;charset=utf-8'
 }
 
 export enum Elements {
@@ -38,4 +42,8 @@ export enum Elements {
 
 export enum Document {
   COMMAND_COPY = 'copy'
+}
+
+export enum DispositionType {
+  ATTACHMENT = 'attachment'
 }

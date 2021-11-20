@@ -4,34 +4,33 @@ import produce from 'immer';
 import ActionType from '~enums/AuthContext';
 
 export const defaultState: AuthContext = {
+  username: null,
+  roles: [],
+  projects: [],
+  authMode: null,
   version: null,
-  login: null,
-  roles: null,
-  rights: [],
-  url: null,
-  ip: null,
-  name: null,
-  lastName: null,
-  middleName: null,
-  email: null
+  logoutUrl: null,
+  authUrl: null,
+  apiUrl: null,
+  engineAdminUrl: null
 };
 
 const auth = (state: AuthContext, { type, context }: AuthContextAction): AuthContext =>
   produce(state, (draft: AuthContext): AuthContext => {
     switch (type) {
       case ActionType.USER_LOAD_SUCCESS: {
-        draft.version = context.version;
-        draft.login = context.login;
+        draft.username = context.username;
         draft.roles = context.roles;
-        draft.ip = context.ip;
-        draft.name = context.name;
-        draft.lastName = context.lastName;
-        draft.middleName = context.middleName;
-        draft.email = context.email;
+        draft.projects = context.projects;
         return draft;
       }
-      case ActionType.RIGHTS_LOAD_SUCCESS: {
-        draft.rights = context.rights;
+      case ActionType.GENERAL_SETTINGS_LOAD_SUCCESS: {
+        draft.authMode = context.authMode;
+        draft.version = context.version;
+        draft.logoutUrl = context.logoutUrl;
+        draft.authUrl = context.authUrl;
+        draft.apiUrl = context.apiUrl;
+        draft.engineAdminUrl = context.engineAdminUrl;
         return draft;
       }
       case ActionType.URL_LOAD_SUCCESS: {

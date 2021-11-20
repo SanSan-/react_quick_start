@@ -1,12 +1,12 @@
 import { AnyAction } from 'redux';
 import { Either, left, right } from '@sweet-monads/either';
 import { hideSpinner, showResponseError, showSpinner } from '~actions/common';
-import { fetchGet, fetchPost, wrapJson } from '~actions/backend/fetch';
+import { fetchPost, wrapJson } from '~actions/backend/fetch';
 import { UNAUTHENTICATED_ANSWER } from '~const/settings';
 import ActionType from '~enums/Backend';
 import Exceptions from '~enums/Exceptions';
-import { ContentType, Headers, ResponseStatus } from '~enums/Http';
-import { ControllerPath, CsrfToken } from '~enums/Routes';
+import { ContentType, DispositionType, Headers, ResponseStatus } from '~enums/Http';
+import { AuthToken, ControllerPath } from '~enums/Routes';
 import Type from '~enums/Types';
 import ResultStatus from '~enums/ResultStatus';
 import { AsyncOptions, GetStateAction, RequestAction, ThunkResult } from '~types/action';
@@ -16,7 +16,7 @@ import { AnyResponse } from '~types/response';
 import { DefaultDispatch } from '~types/store';
 import AccessDeniedException, { accessDeniedException } from '~exceptions/AccessDeniedException';
 import ApplicationException, { applicationException } from '~exceptions/ApplicationException';
-import JsonParsingException from '~exceptions/JsonParsingException';
+import JsonParsingException, { jsonParsingException } from '~exceptions/JsonParsingException';
 import TimeoutException from '~exceptions/TimeoutException';
 import TransportNoRouteException, { transportNoRouteException } from '~exceptions/TransportNoRouteException';
 import UnexpectedException from '~exceptions/UnexpectedException';
@@ -27,12 +27,20 @@ import {
   ACCESS_DENIED,
   ENDPOINT_NOT_AVAILABLE,
   INCORRECT_SERVER_RESULT,
+  LOCAL_STORAGE_GET_ITEM_ERROR,
+  LOCAL_STORAGE_IS_EMPTY,
+  LOCAL_STORAGE_PARSE_ERROR,
+  LOCAL_STORAGE_TO_JSON,
   LOGGED_OUT,
   UNEXPECTED_RESPONSE_STATUS,
   UNKNOWN_RESULT
 } from '~const/log';
 import SilentException from '~exceptions/SilentException';
 import { AMPERSAND_SIGN, EMPTY_ACTION, EQUAL_SIGN, SLASH_SIGN, SPACE_SIGN, ZERO_SIGN } from '~const/common';
+import AuthMode from '~enums/AuthMode';
+import { isNotExpired } from '~utils/BackendUtils';
+import saveAs from 'file-saver';
+import { TokenAuth } from '~enums/Html';
 
 export const defaultOptions: AsyncOptions = {
   controllerPath: ControllerPath.INVOKE,
@@ -86,10 +94,10 @@ export const handleErrorJson = (
   }
 };
 
-const tokenSuccess = (moduleId: string, csrfToken: Token): RequestAction => ({
+const tokenSuccess = (moduleId: string, token: Token): RequestAction => ({
   type: ActionType.GET_TOKEN_SUCCESS,
   moduleId,
-  csrfToken
+  token
 });
 
 const tokenError = (moduleId: string, error: string): RequestAction => ({
@@ -98,37 +106,45 @@ const tokenError = (moduleId: string, error: string): RequestAction => ({
   error
 });
 
-const fetchTokenOk = async (moduleId: string, response: Response, dispatch: DefaultDispatch):
-  Promise<Either<ErrorType, string>> => {
+export const fetchTokenOk = (
+  moduleId: string, response: Response) => async (dispatch: DefaultDispatch): Promise<Either<ErrorType, Token>> => {
   const contentType = response.headers.get(Headers.CONTENT_TYPE);
   if (contentType === UNAUTHENTICATED_ANSWER) {
+    localStorage.removeItem(TokenAuth.KEY);
     dispatch(tokenError(moduleId, UNAUTHENTICATED_ANSWER));
     return left(applicationException(UNAUTHENTICATED_ANSWER));
   }
   const json = await wrapJson<Token>(response);
-  return json.mapRight((csrfToken): string => {
-    dispatch(tokenSuccess(moduleId, csrfToken));
-    return csrfToken.token;
+  return json.mapRight((token): Token => {
+    localStorage.setItem(TokenAuth.KEY, JSON.stringify(token));
+    dispatch(tokenSuccess(moduleId, token));
+    return token;
   }).mapLeft((error: ErrorResponse) => {
+    localStorage.removeItem(TokenAuth.KEY);
     dispatch(tokenError(moduleId, error.message));
+    return error;
   });
 };
 
 export const fetchToken = (moduleId: string) => async (dispatch: DefaultDispatch, getState: GetStateAction):
-  Promise<Either<ErrorType, string>> => {
-  const csrf: Token = getState().app.backend.request.tokens[moduleId];
-  if (csrf && !isEmpty(csrf.promise)) {
-    return csrf.promise;
+  Promise<Either<ErrorType, Token>> => {
+  const { token, refreshPromise } = getState().app.backend.request;
+  if (!isEmpty(refreshPromise)) {
+    return refreshPromise;
   }
-  const answer = await fetchGet(CsrfToken.GET_BY_MODULE_ID, encodeURIComponent(moduleId));
+  const answer = await fetchPost(`${SLASH_SIGN}${moduleId}${AuthToken.GET_REFRESH_TOKEN}`, JSON.stringify({
+    refresh_token: token.refresh_token
+  }));
   return answer.mapLeft((error: ExceptionType) => {
+    localStorage.removeItem(TokenAuth.KEY);
     dispatch(tokenError(moduleId, error.message));
     return error;
   }).asyncChain(async (response: Response) => {
     switch (response.status) {
       case ResponseStatus._200:
-        return await fetchTokenOk(moduleId, response, dispatch);
+        return await dispatch(fetchTokenOk(moduleId, response));
       case ResponseStatus._401: {
+        localStorage.removeItem(TokenAuth.KEY);
         dispatch(logoutSuccess());
         dispatch(tokenError(moduleId, LOGGED_OUT));
         return left(new SilentException());
@@ -143,18 +159,48 @@ export const fetchToken = (moduleId: string) => async (dispatch: DefaultDispatch
   });
 };
 
-export const getToken = (moduleId: string) => async (dispatch: DefaultDispatch, getState: GetStateAction):
-  Promise<Either<ErrorType, string>> => {
-  const csrf: Token = getState().app.backend.request.tokens[moduleId];
-  if (csrf && csrf.token && csrf.validUntil > new Date().getTime()) {
-    return right(csrf.token);
+export const getLocalToken = (): Either<ErrorType, Token> => {
+  const localToken = localStorage.getItem(TokenAuth.KEY);
+  if (!isEmpty(localToken)) {
+    try {
+      const token = JSON.parse(localToken) as Token;
+      return right(token);
+    } catch (_e) {
+      return left(jsonParsingException(`${LOCAL_STORAGE_PARSE_ERROR}${TokenAuth.KEY}${LOCAL_STORAGE_TO_JSON}`));
+    }
   }
-  return dispatch(fetchToken(moduleId));
+  return left(new Error(`${LOCAL_STORAGE_GET_ITEM_ERROR}${TokenAuth.KEY}${LOCAL_STORAGE_IS_EMPTY}`));
+};
+
+export const checkLocalToken = (moduleId: string) => (dispatch: DefaultDispatch): void => {
+  const localToken = getLocalToken();
+  localToken.mapRight((tok) => {
+    dispatch(tokenSuccess(moduleId, tok));
+  });
+};
+
+export const getToken = (moduleId: string) => async (dispatch: DefaultDispatch, getState: GetStateAction):
+  Promise<Either<ErrorType, Token>> => {
+  const { token, authMode } = getState().app.backend.request;
+  if (![AuthMode.DEV, AuthMode.KEYCLOAK].includes(authMode)) {
+    return right(null);
+  }
+  if (token && isNotExpired(token.access_token)) {
+    return right(token);
+  }
+  if (token && isNotExpired(token.refresh_token)) {
+    return dispatch(fetchToken(moduleId));
+  }
+  localStorage.removeItem(TokenAuth.KEY);
+  dispatch(logoutSuccess());
+  dispatch(tokenError(moduleId, LOGGED_OUT));
+  return left(new SilentException());
 };
 
 const executeRequestOk = (response: Response, requestOptions: AsyncOptions):
   ThunkResult<Promise<Either<ErrorType, AnyResponse | unknown>>, AnyAction> => async (dispatch) => {
   const contentType = response.headers.get(Headers.CONTENT_TYPE);
+  const disposition = response.headers.get(Headers.CONTENT_DISPOSITION);
   if (contentType && contentType.startsWith(ContentType.HTML)) {
     return left(applicationException(UNAUTHENTICATED_ANSWER));
   }
@@ -163,6 +209,14 @@ const executeRequestOk = (response: Response, requestOptions: AsyncOptions):
   }
   if (requestOptions.controllerPath === ControllerPath.DOWNLOAD) {
     return right(response);
+  }
+  if (disposition && disposition.indexOf(DispositionType.ATTACHMENT) !== -1) {
+    const text = await response.text();
+    const startIndex = disposition.indexOf(Headers.FILENAME) + Headers.FILENAME.length;
+    const endIndex = disposition.length;
+    const fileName = disposition.substring(startIndex, endIndex);
+    saveAs(new File([text], fileName, { type: ContentType.PLAIN }), fileName);
+    return right(null);
   }
   const json = await wrapJson<AnyResponse>(response);
   return json.mapRight((answer) => {
@@ -193,7 +247,7 @@ const handleErrorResponse = (response: Response, text: string): Either<ErrorType
 
 const fetchRequest = (endpoint: string, body: string, options: AsyncOptions):
   ThunkResult<Promise<Either<ErrorType, AnyResponse | unknown>>, AnyAction> => async (dispatch) => {
-  const answer = await fetchPost(endpoint, body);
+  const answer = await fetchPost(endpoint, body, options.headers);
   return answer.asyncChain(async (response) => {
     switch (response.status) {
       case ResponseStatus._200:
@@ -222,17 +276,23 @@ export const executeRequest = <T extends AnyResponse> (
     const requestOptions = { ...defaultOptions, ...options };
     const moduleId = requestOptions.moduleId || SERVER_MODULE_NAME;
     dispatch(processStart(requestOptions.spinner));
-    const dispatchToken: Either<ErrorType, string> = await dispatch(getToken(moduleId));
-    return dispatchToken.mapLeft((error) => {
+    dispatch(checkLocalToken(moduleId));
+    const jwtToken: Either<ErrorType, Token> = await dispatch(getToken(moduleId));
+    return jwtToken.mapLeft((error) => {
       dispatch(processEnd(requestOptions.spinner));
       throw error;
-    }).asyncChain(async (token: string): Promise<Either<ErrorType, T>> => {
-      const requestParams: Record<string, unknown> = { ...parameters, csrfToken: token };
-      const body = Object.keys(requestParams).map((key: string): string =>
-        `${encodeURIComponent(key)}${EQUAL_SIGN}${encodeURIComponent(JSON.stringify(requestParams[key]))}`
+    }).asyncChain(async (token: Token): Promise<Either<ErrorType, T>> => {
+      const body = Object.keys(parameters).map((key: string): string =>
+        `${encodeURIComponent(key)}${EQUAL_SIGN}${encodeURIComponent(JSON.stringify(parameters[key]))}`
       ).join(AMPERSAND_SIGN);
       const endpoint = `${requestOptions.controllerPath}${moduleId}${SLASH_SIGN}${endpointId}`;
-      const response = await dispatch(fetchRequest(endpoint, body, requestOptions)) as Either<ErrorType, T>;
+      const response = await dispatch(fetchRequest(endpoint, body,
+        {
+          ...requestOptions, headers: {
+            Authorization: `${Headers.BEARER}${SPACE_SIGN}${token && token.access_token}`
+          }
+        }
+      )) as Either<ErrorType, T>;
       dispatch(processEnd(requestOptions.spinner));
       return response.mapLeft((error) => {
         throw error;

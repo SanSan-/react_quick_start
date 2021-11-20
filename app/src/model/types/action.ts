@@ -1,18 +1,11 @@
-import {
-  BreadcrumbState,
-  CommonDialog,
-  NotificationType,
-  PromiseDialog,
-  PushListener,
-  PushState,
-  Token
-} from '~types/state';
+import { BreadcrumbState, CommonDialog, PromiseDialog, Token } from '~types/state';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { GeneralState } from '~types/store';
 import { AuthContext } from '~types/context';
-import { ActionResponse, Pagination, RowsDto, Spinner } from '~types/dto';
+import { ActionResponse, ErrorType, Pagination, RowsDto, Spinner } from '~types/dto';
 import { RosterFilter } from '~types/filters';
+import { Either } from '@sweet-monads/either';
 
 export interface GetStateAction {
   (): GeneralState;
@@ -37,20 +30,13 @@ export interface AsyncAction {
 
 export interface AsyncOptions extends AsyncAction {
   controllerPath?: string;
-}
-
-export interface PushAction extends AnyAction {
-  notificationId?: string;
-  notificationSessionId?: string;
-  dto?: PushState;
-  data?: NotificationType;
-  listener?: PushListener;
+  headers?: Record<string, unknown>;
 }
 
 export interface RequestAction extends AnyAction {
   moduleId: string;
-  csrfToken?: Token;
-  promise?: Response;
+  token?: Token;
+  promise?: Promise<Either<ErrorType, Token>>;
   error?: string;
 }
 

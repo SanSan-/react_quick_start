@@ -1,4 +1,5 @@
 import { DefaultState, DefaultStringState } from '~types/state';
+import AuthMode from '~enums/AuthMode';
 
 export interface AppContext extends DefaultStringState {
   __appToolbarTitle?: string;
@@ -10,14 +11,14 @@ export interface AppContext extends DefaultStringState {
 }
 
 export interface AuthContext extends DefaultState {
+  username?: string;
+  roles?: string[];
+  projects?: string[];
+  authMode?: AuthMode;
   version?: string;
-  login?: string;
-  roles?: string;
-  rights?: string[];
+  logoutUrl?: string;
+  authUrl?: string;
+  apiUrl?: string;
+  engineAdminUrl?: string;
   url?: string;
-  ip?: string;
-  name?: string;
-  lastName?: string;
-  middleName?: string;
-  email?: string;
 }

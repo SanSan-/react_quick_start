@@ -2,7 +2,7 @@ import { AnyAction } from 'redux';
 import { Either, left, right } from '@sweet-monads/either';
 import { hideSpinner, showSpinner } from '~actions/common';
 import { fetchPost, wrapJson } from '~actions/backend/fetch';
-import { getToken } from '~actions/backend/request';
+import { checkLocalToken, fetchTokenOk, getToken } from '~actions/backend/request';
 import {
   ENDPOINT_NOT_AVAILABLE,
   UNEXPECTED_NOT_JSON_RESULT,
@@ -11,13 +11,14 @@ import {
 } from '~const/log';
 import ActionType from '~enums/Backend';
 import { Auth as AuthErrors } from '~enums/Errors';
-import { Auth } from '~enums/Routes';
-import { AuthTag } from '~enums/Html';
+import { Auth, AuthToken } from '~enums/Routes';
+import { AuthTag, TokenAuth } from '~enums/Html';
 import { ResponseStatus } from '~enums/Http';
 import { SessionAction, ThunkResult } from '~types/action';
 import { JsonResponse } from '~types/response';
 import { transportNoRouteException } from '~exceptions/TransportNoRouteException';
 import { unexpectedException } from '~exceptions/UnexpectedException';
+import { SLASH_SIGN } from '~const/common';
 
 export const passwordExpired = (username: string, oldPassword: string): SessionAction => ({
   type: ActionType.PASSWORD_EXPIRED,
@@ -76,13 +77,14 @@ export const loginError = (message: string): SessionAction => ({
 export const login = (username: string, password: string): ThunkResult<void, AnyAction> => async (dispatch) => {
   dispatch(showSpinner());
   const answer = await fetchPost(
-    Auth.LOGIN,
-    `${AuthTag.USERNAME}${encodeURIComponent(username)}${AuthTag.PASSWORD}${encodeURIComponent(password)}`
+    `${SLASH_SIGN}${SERVER_MODULE_NAME}${AuthToken.GET_ACCESS_TOKEN}`,
+    JSON.stringify({ username, password })
   );
   const chain = await answer.mapLeft(() => new Error(UNKNOWN_COMMUNICATION_PROBLEM))
     .asyncChain(async (response): Promise<Either<Error, SessionAction>> => {
       if (response.status === ResponseStatus._200) {
-        return right(loginSuccess());
+        const token = await dispatch(fetchTokenOk(SERVER_MODULE_NAME, response));
+        return token.mapRight(() => loginSuccess()).mapLeft((e) => new Error(e.message));
       }
       const jsonAnswer = await wrapJson<JsonResponse>(response);
       return jsonAnswer.mapLeft(() => new Error(UNEXPECTED_NOT_JSON_RESULT))
@@ -107,9 +109,9 @@ export const logoutError = (error: Error): SessionAction => ({
   error
 });
 
-export const logout = (): ThunkResult<void, AnyAction> => async (dispatch) => {
+export const logout = (logoutUrl: string): ThunkResult<void, AnyAction> => async (dispatch) => {
   dispatch({ type: ActionType.LOGOUT });
-  const answer = await fetchPost(Auth.LOGOUT);
+  const answer = await fetchPost(`${SLASH_SIGN}${SERVER_MODULE_NAME}${logoutUrl || Auth.LOGOUT}`);
   const securityAnswer = await answer.asyncChain(async (response: Response) => {
     switch (response.status) {
       case ResponseStatus._200:
@@ -120,6 +122,7 @@ export const logout = (): ThunkResult<void, AnyAction> => async (dispatch) => {
         return left(unexpectedException(`${UNEXPECTED_RESPONSE_STATUS}${response.status}`));
     }
   });
+  localStorage.removeItem(TokenAuth.KEY);
   securityAnswer.mapRight(() => {
     dispatch(logoutSuccess());
   }).mapLeft((error) => {
@@ -128,6 +131,9 @@ export const logout = (): ThunkResult<void, AnyAction> => async (dispatch) => {
   });
 };
 
-export const checkAuth = (): ThunkResult<void, AnyAction> => (dispatch) => dispatch(getToken(SERVER_MODULE_NAME))
-  .then((token: Either<unknown, unknown>) => token.mapRight(() => dispatch(loginSuccess()))
-    .mapLeft(() => dispatch(logout())));
+export const checkAuth = (logoutUrl: string): ThunkResult<void, AnyAction> => async (dispatch) => {
+  dispatch(checkLocalToken(SERVER_MODULE_NAME));
+  const token = await dispatch(getToken(SERVER_MODULE_NAME));
+  token.mapRight(() => dispatch(loginSuccess()))
+    .mapLeft(() => dispatch(logout(logoutUrl)));
+};

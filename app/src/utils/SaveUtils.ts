@@ -24,7 +24,7 @@ export const exportToExcelAction = (
   timezone?: string
 ): ThunkResult<Promise<void>, SaveFileResponseAction> =>
   (dispatch) =>
-    (dispatch(backend.executeRequestAsync(endpoint, { ...parameters, timezone }))
+    (dispatch(backend.executeRequest(endpoint, { ...parameters, timezone }))
       .then((either: Either<ErrorType, ReportResponse>) => {
         either.mapRight((response) =>
           dispatch(backend.wrapResponse(response, callback(response.data, response.fileName), errorCallback()))

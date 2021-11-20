@@ -9,12 +9,10 @@ export interface ExceptionType extends DefaultStringState {
   originalStackTrace?: string;
 }
 
-export interface ErrorResponse extends DefaultStringState {
+export interface ErrorResponse extends ExceptionType {
   moduleId?: string;
   errorId?: string;
-  message?: string;
   originalMessage?: string;
-  originalStackTrace?: string;
 }
 
 export type ErrorType = ExceptionType | Error | unknown;

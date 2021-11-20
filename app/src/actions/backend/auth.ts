@@ -1,30 +1,29 @@
-import * as backend from '~actions/backend';
-
-import { AuthContextAction, ThunkResult } from '~types/action';
+import { AuthContextAction } from '~types/action';
 import { Either } from '@sweet-monads/either';
 import { ErrorType } from '~types/dto';
-import { UserInfoResponse, UserRightsResponse } from '~types/response';
-import { AnyAction } from 'redux';
-import { userApi } from '~dictionaries/backend';
+import { GeneralSettingsResponse, PersonalSettingsResponse } from '~types/response';
 import ActionType from '~enums/AuthContext';
+import { wrapFetchJson } from '~actions/backend/fetch';
+import { Settings } from '~enums/Routes';
 
-export const loadUser = ({ version, login, roles, ip, name, middleName, lastName, email }: UserInfoResponse):
+export const loadUser = ({ username, roles, projects }: PersonalSettingsResponse):
   AuthContextAction => ({
   type: ActionType.USER_LOAD_SUCCESS,
-  context: {
-    version,
-    login,
-    roles,
-    ip,
-    name,
-    middleName,
-    lastName,
-    email
-  }
+  context: { username, roles, projects }
 });
 
-export const loadRights = (rights: string[]): AuthContextAction =>
-  ({ type: ActionType.RIGHTS_LOAD_SUCCESS, context: { rights } });
+export const loadGeneralSettings = ({
+  apiUrl,
+  authMode,
+  authUrl,
+  logoutUrl,
+  version,
+  engineAdminUrl
+}: GeneralSettingsResponse): AuthContextAction =>
+  ({
+    type: ActionType.GENERAL_SETTINGS_LOAD_SUCCESS,
+    context: { apiUrl, authMode, authUrl, logoutUrl, version, engineAdminUrl }
+  });
 
 export const loadUrl = (isClient: boolean): AuthContextAction => ({
   type: ActionType.URL_LOAD_SUCCESS, context: {
@@ -34,8 +33,8 @@ export const loadUrl = (isClient: boolean): AuthContextAction => ({
 
 export const clearAuthContext = (): AuthContextAction => ({ type: ActionType.CLEAR });
 
-export const getRights = (): ThunkResult<Promise<Either<ErrorType, UserRightsResponse>>, AnyAction> => (dispatch) =>
-  dispatch(backend.executeRequest(userApi.rights));
+export const getGeneralSettings = async (): Promise<Either<ErrorType, GeneralSettingsResponse>> =>
+  await wrapFetchJson<GeneralSettingsResponse>(Settings.GENERAL);
 
-export const getUser = (): ThunkResult<Promise<Either<ErrorType, UserInfoResponse>>, AnyAction> => (dispatch) =>
-  dispatch(backend.executeRequest(userApi.get));
+export const getUser = async (): Promise<Either<ErrorType, PersonalSettingsResponse>> =>
+  await wrapFetchJson<PersonalSettingsResponse>(Settings.PERSONAL);

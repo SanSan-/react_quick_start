@@ -11,7 +11,7 @@ interface ApplicationState {
 
 export interface GeneralState {
   app?: ApplicationState;
-  router: LocationChangePayload;
+  router?: LocationChangePayload;
 }
 
 export type DefaultDispatch = ThunkDispatch<GeneralState, unknown, AnyAction>;

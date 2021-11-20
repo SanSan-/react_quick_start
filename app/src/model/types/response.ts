@@ -1,5 +1,6 @@
 import { DefaultState } from '~types/state';
 import { Pagination, RowsDto } from '~types/dto';
+import AuthMode from '~enums/AuthMode';
 
 export interface AnyResponse {
   [key: string]: string | unknown;
@@ -18,6 +19,21 @@ export interface JsonResponse extends DefaultState {
   status?: string;
   errorCode?: string;
   errorDescription?: string;
+}
+
+export interface GeneralSettingsResponse extends DefaultState {
+  authMode?: AuthMode;
+  version?: string;
+  logoutUrl?: string;
+  authUrl?: string;
+  apiUrl?: string;
+  engineAdminUrl?: string;
+}
+
+export interface PersonalSettingsResponse extends DefaultState {
+  username?: string;
+  roles?: string[];
+  projects?: string[];
 }
 
 export interface PageableResponse extends AnyResponse {
@@ -46,4 +62,8 @@ export type EndpointResponse = string[] | AnyResponse;
 export interface ReportResponse extends AnyResponse {
   data?: number[];
   fileName?: string;
+}
+
+export interface JwtResponse extends AnyResponse {
+  exp: number;
 }

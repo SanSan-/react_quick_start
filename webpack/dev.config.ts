@@ -16,7 +16,9 @@ module.exports = {
   },
   mode: 'development',
   output: {
-    filename: `./js/[name].[chunkhash]${settings.resourcePrefix}.js`
+    filename: `./js/[name].[chunkhash]${settings.resourcePrefix}.js`,
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/'
   },
   module: {
     rules: [

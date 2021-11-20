@@ -9,15 +9,18 @@ import UnknownCommunicationException, {
 } from '~exceptions/UnknownCommunicationException';
 import { ExceptionType } from '~types/dto';
 
-const initRequestDetail: RequestInit = {
+const initRequestDetail = (otherHeaders: Record<string, unknown> = {}): RequestInit => ({
   credentials: Credentials.SAME_ORIGIN,
   headers: {
+    ...otherHeaders,
     Accept: ContentType.JSON,
     [Headers.CONTENT_TYPE]: ContentType.URL_ENCODED_UTF_8
   }
-};
+});
 
 export const wrapFetch = async (input: RequestInfo, init: RequestInit): Promise<Either<TimeoutException, Response>> => {
+  // eslint-disable-next-line no-console
+  console.log('[wrapFetch] fetch (input, init)::', input, init);
   try {
     const data = await fetch(input, init);
     return right(data);
@@ -32,18 +35,19 @@ export const fetchGet = async (
 ): Promise<Either<TimeoutException, Response>> => await wrapFetch(
   `${SERVER_PATH}${service}${request}`,
   {
-    ...initRequestDetail,
+    ...initRequestDetail(),
     method: Method.GET
   }
 );
 
 export const fetchPost = async (
   endpoint: string,
-  body: string = EMPTY_STRING
+  body: string = EMPTY_STRING,
+  headers: Record<string, unknown> = {}
 ): Promise<Either<TimeoutException, Response>> => await wrapFetch(
   `${SERVER_PATH}${endpoint}`,
   {
-    ...initRequestDetail,
+    ...initRequestDetail(headers),
     method: Method.POST,
     body
   }
